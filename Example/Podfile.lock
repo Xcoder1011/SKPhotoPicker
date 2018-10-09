@@ -1,21 +1,20 @@
 PODS:
+  - Masonry (1.1.0)
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
-  - SKPhotoPicker (0.0.1):
+  - SKPhotoPicker (0.0.2):
+    - Masonry
     - SDWebImage (~> 4.0)
 
 DEPENDENCIES:
-  - SKPhotoPicker (from `../`)
-
-EXTERNAL SOURCES:
-  SKPhotoPicker:
-    :path: ../
+  - SKPhotoPicker
 
 SPEC CHECKSUMS:
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
-  SKPhotoPicker: f6b2477ba2015b841d3ff4f7e7ff2bc0d6e9f34f
+  SKPhotoPicker: 87b5ad2d4d15a85fd2a141c5f49948c3c9020398
 
-PODFILE CHECKSUM: a20a6e7a15a4ff064c018f613395be6c002b3fe5
+PODFILE CHECKSUM: 62d6f1aa276ad43406878efe549c1084ece5a8fb
 
 COCOAPODS: 1.3.1

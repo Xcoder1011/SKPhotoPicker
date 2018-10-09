@@ -10,6 +10,16 @@
 #endif
 #endif
 
+#import "SKPhotoAlbumListController.h"
+#import "SKPhotoNavigationController.h"
+#import "SKPhotoPickerViewController.h"
+#import "SKPhotoPreviewController.h"
+#import "SKPhotoHeader.h"
+#import "SKPhotoManager.h"
+#import "SKPhotoModel.h"
+#import "SKPhotoCell.h"
+#import "SKPreviewPhotoCell.h"
+#import "SKPreviewVideoCell.h"
 
 FOUNDATION_EXPORT double SKPhotoPickerVersionNumber;
 FOUNDATION_EXPORT const unsigned char SKPhotoPickerVersionString[];
