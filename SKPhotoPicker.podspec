@@ -1,42 +1,20 @@
-#
-# Be sure to run `pod lib lint SKPhotoPicker.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
 
 Pod::Spec.new do |s|
-  s.name             = 'SKPhotoPicker'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of SKPhotoPicker.'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.name         = "SKPhotoPicker"
+  s.version      = "0.0.1"
+  s.summary      = "Easy to use photo album by PhotoKit."
+  s.homepage     = "https://github.com/Xcoder1011/SKPhotoPicker"
+  s.license      = "MIT"
+  s.author             = { "Xcoder1011" => "shangkunwu@msn.com" }
+  s.social_media_url   = "https://github.com/Xcoder1011"
+  s.platform     = :ios, "9.0"
+  s.ios.deployment_target = "9.0"
+  s.osx.deployment_target = "10.9"
+  s.watchos.deployment_target = "2.0"
+  s.tvos.deployment_target = "9.0"
+  s.source       = { :git => "https://github.com/Xcoder1011/SKPhotoPicker.git", :tag => s.version }
+  s.requires_arc = true
+  s.dependency "SDWebImage", "~> 4.0"
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/Xcoder1011/SKPhotoPicker'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Xcoder1011' => 'wushangkun@chelun.com' }
-  s.source           = { :git => 'https://github.com/Xcoder1011/SKPhotoPicker.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '8.0'
-
-  s.source_files = 'SKPhotoPicker/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'SKPhotoPicker' => ['SKPhotoPicker/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
