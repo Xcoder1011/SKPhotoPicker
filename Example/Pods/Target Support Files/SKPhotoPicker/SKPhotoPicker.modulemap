@@ -1,0 +1,6 @@
+framework module SKPhotoPicker {
+  umbrella header "SKPhotoPicker-umbrella.h"
+
+  export *
+  module * { export * }
+}

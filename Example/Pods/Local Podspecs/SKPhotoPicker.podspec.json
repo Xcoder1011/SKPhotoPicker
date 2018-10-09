@@ -1,0 +1,22 @@
+{
+  "name": "SKPhotoPicker",
+  "version": "0.1.0",
+  "summary": "A short description of SKPhotoPicker.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Xcoder1011/SKPhotoPicker",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Xcoder1011": "wushangkun@chelun.com"
+  },
+  "source": {
+    "git": "https://github.com/Xcoder1011/SKPhotoPicker.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "SKPhotoPicker/Classes/**/*"
+}

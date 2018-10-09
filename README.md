@@ -1,5 +1,7 @@
 # SKPhotoPicker
 
+Easy to use photo album by PhotoKit.
+
 [![CI Status](https://img.shields.io/travis/Xcoder1011/SKPhotoPicker.svg?style=flat)](https://travis-ci.org/Xcoder1011/SKPhotoPicker)
 [![Version](https://img.shields.io/cocoapods/v/SKPhotoPicker.svg?style=flat)](https://cocoapods.org/pods/SKPhotoPicker)
 [![License](https://img.shields.io/cocoapods/l/SKPhotoPicker.svg?style=flat)](https://cocoapods.org/pods/SKPhotoPicker)
@@ -22,7 +24,7 @@ pod 'SKPhotoPicker'
 
 ## Author
 
-Xcoder1011, wushangkun@chelun.com
+Xcoder1011, shangkunwu@msn.com
 
 ## License
 
