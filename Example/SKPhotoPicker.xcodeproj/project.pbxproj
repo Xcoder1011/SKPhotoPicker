@@ -39,7 +39,7 @@
 /* Begin PBXFileReference section */
 		09D16EF387D4315C13615616 /* Pods_SKPhotoPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKPhotoPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA934CB409CD1E7E4F4B2F9 /* Pods_SKPhotoPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKPhotoPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		39DB224A0FA16BDFC75CF3BD /* SKPhotoPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = SKPhotoPicker.podspec; path = ../SKPhotoPicker.podspec; sourceTree = "<group>"; };
+		39DB224A0FA16BDFC75CF3BD /* SKPhotoPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SKPhotoPicker.podspec; path = ../SKPhotoPicker.podspec; sourceTree = "<group>"; };
 		3F5CE24B0CC6A5C4E65EFAED /* Pods-SKPhotoPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Tests/Pods-SKPhotoPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* SKPhotoPicker_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKPhotoPicker_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,9 +63,9 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		724968A92FF932058B245C0B /* Pods-SKPhotoPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Tests/Pods-SKPhotoPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B05A58081B51BE8D89BA2206 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		B05A58081B51BE8D89BA2206 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B4EA549C9054EC9780501EEE /* Pods-SKPhotoPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
-		BCFB1CA32F0803750F466DBF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BCFB1CA32F0803750F466DBF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D1625485E699474859144DFC /* Pods-SKPhotoPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
