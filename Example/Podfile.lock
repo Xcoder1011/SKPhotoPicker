@@ -1,5 +1,9 @@
 PODS:
-  - SKPhotoPicker (0.1.0)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
+  - SKPhotoPicker (0.0.1):
+    - SDWebImage (~> 4.0)
 
 DEPENDENCIES:
   - SKPhotoPicker (from `../`)
@@ -9,7 +13,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SKPhotoPicker: ed1517661d040f64c11e2292e8583171aa9188e2
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SKPhotoPicker: f6b2477ba2015b841d3ff4f7e7ff2bc0d6e9f34f
 
 PODFILE CHECKSUM: a20a6e7a15a4ff064c018f613395be6c002b3fe5
 
