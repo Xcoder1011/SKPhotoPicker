@@ -10,4 +10,9 @@
 
 @interface SKPhotoPickerViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger columnNumber;
+@property (nonatomic, assign) BOOL shouldScrollToBottom;
+// 数据源
+@property (nonatomic, strong) NSMutableArray *items;
+
 @end

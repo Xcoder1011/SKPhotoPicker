@@ -26,7 +26,7 @@
 		2789AA7E6028091543D3D0982AA0FF47 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52270190D74C3EEC59A5008605C2F865 /* Foundation.framework */; };
 		28063E34F85CC45CAA30E57B1A641D0B /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5493D19EBDD62B676B72CC35A26CB49C /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2854C9B1086758BD2B6681206B6759B4 /* ViewController+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = EEA2F23E8AE455928333C516A3A6EBEA /* ViewController+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AAB0DE4658D7EBCB3975AB02F00E0E4 /* SKPhotoPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C528A8066D0F821A99A6FFF75D6C1BD0 /* SKPhotoPicker.bundle */; };
+		2AAB0DE4658D7EBCB3975AB02F00E0E4 /* SCPhotoPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C528A8066D0F821A99A6FFF75D6C1BD0 /* SCPhotoPicker.bundle */; };
 		2C8950EDF41967CA4134D4A923E462D4 /* SKPhotoCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DA28A6318FE368AF007DC846518FED5 /* SKPhotoCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E369A075979C93A38AB8BD71C7DEDFD /* SKPhotoPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 9640290A16EB9AE46B038FCDE7EEBC34 /* SKPhotoPickerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		358918E1469209E3FA6B87C89A07800C /* SKPhotoAlbumListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E3BACE6E1A6375E349BB6250485A53 /* SKPhotoAlbumListController.m */; };
@@ -216,7 +216,7 @@
 		599E74A9603B3DAB54B8F29B742B8C6F /* SDWebImageCompat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCompat.h; path = SDWebImage/SDWebImageCompat.h; sourceTree = "<group>"; };
 		5D664C2BDD934AC7E2A04E76E2986862 /* Pods-SKPhotoPicker_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SKPhotoPicker_Tests-umbrella.h"; sourceTree = "<group>"; };
 		61F44475C47B99922A1A84E5DEB62D5F /* SKPhotoModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SKPhotoModel.m; path = SKPhotoPicker/Classes/Models/SKPhotoModel.m; sourceTree = "<group>"; };
-		6419AEEC6FD139F06665D3D904A32DC5 /* Pods_SKPhotoPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKPhotoPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6419AEEC6FD139F06665D3D904A32DC5 /* Pods_SKPhotoPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SKPhotoPicker_Tests.framework; path = "Pods-SKPhotoPicker_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6470135D4AB29A8134023E42EF794BFA /* UIView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+WebCache.m"; path = "SDWebImage/UIView+WebCache.m"; sourceTree = "<group>"; };
 		6BC5B87B3D2A64E1BFD5D4537173D8B2 /* SKPhotoNavigationController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SKPhotoNavigationController.h; path = SKPhotoPicker/Classes/Controllers/SKPhotoNavigationController.h; sourceTree = "<group>"; };
 		6C5991A15E6626BB75B284EDCC38A80E /* UIImage+GIF.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GIF.m"; path = "SDWebImage/UIImage+GIF.m"; sourceTree = "<group>"; };
@@ -225,16 +225,16 @@
 		724C39CEACABE25165D3B25E14886CB9 /* SDWebImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SDWebImage-dummy.m"; sourceTree = "<group>"; };
 		72B88EF20C963F08988B19149DD11EF3 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASCompositeConstraint.m; path = Masonry/MASCompositeConstraint.m; sourceTree = "<group>"; };
 		72FD702CEAF213461AFAEA9FF26E7FF9 /* SKPhotoManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SKPhotoManager.h; path = SKPhotoPicker/Classes/Models/SKPhotoManager.h; sourceTree = "<group>"; };
-		7581952ABB19C86A25779EB9CCAB1242 /* Masonry.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Masonry.modulemap; sourceTree = "<group>"; };
+		7581952ABB19C86A25779EB9CCAB1242 /* Masonry.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Masonry.modulemap; sourceTree = "<group>"; };
 		75CB718A14A6EA41601E7FE0FFA2E46B /* Pods-SKPhotoPicker_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SKPhotoPicker_Example-umbrella.h"; sourceTree = "<group>"; };
 		7666855AF137BA2E47CC6D76F03E7FA9 /* SDWebImageCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCoder.h; path = SDWebImage/SDWebImageCoder.h; sourceTree = "<group>"; };
 		77A3E22ACDC2843BDFC9C9908B0B72EB /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloaderOperation.h; path = SDWebImage/SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
-		7BBC6AB365A214675135005AA2BA88BF /* Pods-SKPhotoPicker_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SKPhotoPicker_Tests.modulemap"; sourceTree = "<group>"; };
-		7D16D689881C4E95DAEE1786F6A5C5B1 /* SKPhotoPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SKPhotoPicker.modulemap; sourceTree = "<group>"; };
+		7BBC6AB365A214675135005AA2BA88BF /* Pods-SKPhotoPicker_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SKPhotoPicker_Tests.modulemap"; sourceTree = "<group>"; };
+		7D16D689881C4E95DAEE1786F6A5C5B1 /* SKPhotoPicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SKPhotoPicker.modulemap; sourceTree = "<group>"; };
 		7D431EEFFEFC5747F4556BAC0CDD610E /* SDWebImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-umbrella.h"; sourceTree = "<group>"; };
 		7DE54BAC5FDEE8F141AC7695EF369789 /* SDWebImageImageIOCoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageImageIOCoder.h; path = SDWebImage/SDWebImageImageIOCoder.h; sourceTree = "<group>"; };
 		7E4C1C074786B9A1E2879B8A10843072 /* UIImage+GIF.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+GIF.h"; path = "SDWebImage/UIImage+GIF.h"; sourceTree = "<group>"; };
-		81749BC51988F8AF78B93137E0A49FDA /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81749BC51988F8AF78B93137E0A49FDA /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SDWebImage.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86D53635B28DE54050FFF075129FA1D5 /* SKPhotoPreviewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SKPhotoPreviewController.h; path = SKPhotoPicker/Classes/Controllers/SKPhotoPreviewController.h; sourceTree = "<group>"; };
 		87D05D198DD43A11C82D10C822E5E82E /* Masonry-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Masonry-umbrella.h"; sourceTree = "<group>"; };
 		87FEE6D67E7C32B06A40262C49331ED6 /* MASViewConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewConstraint.h; path = Masonry/MASViewConstraint.h; sourceTree = "<group>"; };
@@ -242,7 +242,7 @@
 		9144B4CF4F0337BA87B477024200294D /* MASConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASConstraint.h; path = Masonry/MASConstraint.h; sourceTree = "<group>"; };
 		9234AA8729F5BDE631125678725909D8 /* NSImage+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSImage+WebCache.m"; path = "SDWebImage/NSImage+WebCache.m"; sourceTree = "<group>"; };
 		92C8974A851DFDAF3187574A97D288B0 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASCompositeConstraint.h; path = Masonry/MASCompositeConstraint.h; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		94DBD3AEC150C84405D75C4E5A4A36CA /* SDWebImageTransition.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageTransition.h; path = SDWebImage/SDWebImageTransition.h; sourceTree = "<group>"; };
 		95E3B8CC7017133F615CAEBC4838046B /* MASViewConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASViewConstraint.m; path = Masonry/MASViewConstraint.m; sourceTree = "<group>"; };
 		9640290A16EB9AE46B038FCDE7EEBC34 /* SKPhotoPickerViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SKPhotoPickerViewController.h; path = SKPhotoPicker/Classes/Controllers/SKPhotoPickerViewController.h; sourceTree = "<group>"; };
@@ -264,13 +264,13 @@
 		BB8BE450E4DF1445DCD8BA58276F0923 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		BBA20087E98F2F980F6152175285DEE2 /* SDWebImageCompat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageCompat.m; path = SDWebImage/SDWebImageCompat.m; sourceTree = "<group>"; };
 		BDAE6B33525A865437C3FE6048991A98 /* Pods-SKPhotoPicker_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SKPhotoPicker_Tests-resources.sh"; sourceTree = "<group>"; };
-		BEF622CBF4C475B54ACA122C0838420E /* SKPhotoPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKPhotoPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEF622CBF4C475B54ACA122C0838420E /* SKPhotoPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SKPhotoPicker.framework; path = SKPhotoPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF76CCB0ACFEA165C1718A0604A63C61 /* SDWebImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageManager.h; path = SDWebImage/SDWebImageManager.h; sourceTree = "<group>"; };
-		BFF512CA6E0BC3C9BD6A6D3CE25D9B7B /* Pods-SKPhotoPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SKPhotoPicker_Example.modulemap"; sourceTree = "<group>"; };
-		C2D5FA4F2B05936FE7F902455B7F319E /* SDWebImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SDWebImage.modulemap; sourceTree = "<group>"; };
+		BFF512CA6E0BC3C9BD6A6D3CE25D9B7B /* Pods-SKPhotoPicker_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SKPhotoPicker_Example.modulemap"; sourceTree = "<group>"; };
+		C2D5FA4F2B05936FE7F902455B7F319E /* SDWebImage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SDWebImage.modulemap; sourceTree = "<group>"; };
 		C3DCF7998057C627C9061377BE075DC4 /* View+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "View+MASAdditions.m"; path = "Masonry/View+MASAdditions.m"; sourceTree = "<group>"; };
 		C3FA7B193DBD2CFBB3604D4750D0B6A0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C528A8066D0F821A99A6FFF75D6C1BD0 /* SKPhotoPicker.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SKPhotoPicker.bundle; path = SKPhotoPicker/Assets/SKPhotoPicker.bundle; sourceTree = "<group>"; };
+		C528A8066D0F821A99A6FFF75D6C1BD0 /* SCPhotoPicker.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SCPhotoPicker.bundle; path = SKPhotoPicker/Assets/SCPhotoPicker.bundle; sourceTree = "<group>"; };
 		C53FDE0ADD1A5BA79814E2BA34959DCA /* SDWebImageCodersManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageCodersManager.m; path = SDWebImage/SDWebImageCodersManager.m; sourceTree = "<group>"; };
 		C5BD7542135591C3E2EDCD693B4E3A9A /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View+MASShorthandAdditions.h"; path = "Masonry/View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		C6D2F3CB7B5ED21F2EA1C7041578C420 /* Pods-SKPhotoPicker_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SKPhotoPicker_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -279,7 +279,7 @@
 		CDCDFBFDE5F37A9EE9DE38C91ECABF35 /* Pods-SKPhotoPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SKPhotoPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D01769C3FAC19E67D97512C136C3DBCD /* Masonry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Masonry.h; path = Masonry/Masonry.h; sourceTree = "<group>"; };
 		D168BFEA8099AA60BE8D385499B46B46 /* SKPhotoNavigationController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SKPhotoNavigationController.m; path = SKPhotoPicker/Classes/Controllers/SKPhotoNavigationController.m; sourceTree = "<group>"; };
-		D2D8EFC2D230DD40E03184A4A5B4F734 /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2D8EFC2D230DD40E03184A4A5B4F734 /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Masonry.framework; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D34E8C6599F15C6A99B574380AC110E1 /* Pods-SKPhotoPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SKPhotoPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D5BCB811E07CD6B87A0A5C9946F0E54B /* UIImage+ForceDecode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+ForceDecode.h"; path = "SDWebImage/UIImage+ForceDecode.h"; sourceTree = "<group>"; };
 		D6813224F2E0B36695D3491A97652302 /* SKPhotoManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SKPhotoManager.m; path = SKPhotoPicker/Classes/Models/SKPhotoManager.m; sourceTree = "<group>"; };
@@ -303,7 +303,7 @@
 		EE8C78FB7B5797CFD0542E7504F4FD2A /* Pods-SKPhotoPicker_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SKPhotoPicker_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		EEA2F23E8AE455928333C516A3A6EBEA /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ViewController+MASAdditions.h"; path = "Masonry/ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		F14A9C4C088841B62AFAA21667D319A0 /* UIButton+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+WebCache.m"; path = "SDWebImage/UIButton+WebCache.m"; sourceTree = "<group>"; };
-		F2554B04BFE208CABD0FE0D7AC4C7498 /* Pods_SKPhotoPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKPhotoPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2554B04BFE208CABD0FE0D7AC4C7498 /* Pods_SKPhotoPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SKPhotoPicker_Example.framework; path = "Pods-SKPhotoPicker_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66B57C73684F84A55A53694939F6AAA /* UIImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		F6A063E0AD8743759B826525EFEC91C0 /* SDWebImageOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageOperation.h; path = SDWebImage/SDWebImageOperation.h; sourceTree = "<group>"; };
 		F7B5E3481E177F6B364D961571270649 /* SDWebImageGIFCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageGIFCoder.m; path = SDWebImage/SDWebImageGIFCoder.m; sourceTree = "<group>"; };
@@ -458,6 +458,7 @@
 				858422153B9ECEBE71670A0BBBD5F0E2 /* Resources */,
 				393BC7FCDF202A4E2BE558583C129949 /* Support Files */,
 			);
+			name = SKPhotoPicker;
 			path = SKPhotoPicker;
 			sourceTree = "<group>";
 		};
@@ -501,6 +502,7 @@
 				2011D482027B4B1837DD926BE1A811D0 /* Core */,
 				6EF208B8464010626B5851C4505BEF86 /* Support Files */,
 			);
+			name = SDWebImage;
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
@@ -550,7 +552,7 @@
 		858422153B9ECEBE71670A0BBBD5F0E2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C528A8066D0F821A99A6FFF75D6C1BD0 /* SKPhotoPicker.bundle */,
+				C528A8066D0F821A99A6FFF75D6C1BD0 /* SCPhotoPicker.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -597,6 +599,7 @@
 				3E8FC6352D9BED0D93E775E128A88041 /* ViewController+MASAdditions.m */,
 				D78663A4DA678F3F28E9D152BEEF9969 /* Support Files */,
 			);
+			name = Masonry;
 			path = Masonry;
 			sourceTree = "<group>";
 		};
@@ -866,7 +869,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AAB0DE4658D7EBCB3975AB02F00E0E4 /* SKPhotoPicker.bundle in Resources */,
+				2AAB0DE4658D7EBCB3975AB02F00E0E4 /* SCPhotoPicker.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

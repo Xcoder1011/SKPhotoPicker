@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SKPhotoPicker"
-  s.version      = "0.0.2"
+  s.version      = "1.0.0"
   s.summary      = "Easy to use photo album by PhotoKit."
   s.homepage     = "https://github.com/Xcoder1011/SKPhotoPicker"
   s.license      = "MIT"

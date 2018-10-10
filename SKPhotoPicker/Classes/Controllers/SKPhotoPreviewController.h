@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class SKPhotoModel;
 @interface SKPhotoPreviewController : UIViewController
+
+@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, assign) NSInteger currentIndex;
+
+@property (nonatomic, copy) void (^selectItemBlock) (SKPhotoModel *item);
+@property (nonatomic, copy) void (^cancelSelectItemBlock) (SKPhotoModel *item);
 
 @end
