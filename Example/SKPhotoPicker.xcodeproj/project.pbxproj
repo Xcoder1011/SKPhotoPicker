@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3ADE54ECE10C10DAF5148C9A /* Pods_SKPhotoPicker_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09D16EF387D4315C13615616 /* Pods_SKPhotoPicker_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -24,6 +23,9 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		ADB7FAEE3099EDBF0A386C94 /* Pods_SKPhotoPicker_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA934CB409CD1E7E4F4B2F9 /* Pods_SKPhotoPicker_Example.framework */; };
+		BCB83D07216DD24900F2CDB4 /* SKPublishPostTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB83D06216DD24900F2CDB4 /* SKPublishPostTestCell.m */; };
+		BCB83D0A216DD7C900F2CDB4 /* UIColor+SKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB83D09216DD7C900F2CDB4 /* UIColor+SKColor.m */; };
+		BCB83D2C216E01F900F2CDB4 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB83D2A216E01F900F2CDB4 /* UITextView+Placeholder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +42,6 @@
 		09D16EF387D4315C13615616 /* Pods_SKPhotoPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKPhotoPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA934CB409CD1E7E4F4B2F9 /* Pods_SKPhotoPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKPhotoPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39DB224A0FA16BDFC75CF3BD /* SKPhotoPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SKPhotoPicker.podspec; path = ../SKPhotoPicker.podspec; sourceTree = "<group>"; };
-		3F5CE24B0CC6A5C4E65EFAED /* Pods-SKPhotoPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Tests/Pods-SKPhotoPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* SKPhotoPicker_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKPhotoPicker_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,10 +62,15 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		724968A92FF932058B245C0B /* Pods-SKPhotoPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Tests/Pods-SKPhotoPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B05A58081B51BE8D89BA2206 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B4EA549C9054EC9780501EEE /* Pods-SKPhotoPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BCB83D05216DD24900F2CDB4 /* SKPublishPostTestCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKPublishPostTestCell.h; sourceTree = "<group>"; };
+		BCB83D06216DD24900F2CDB4 /* SKPublishPostTestCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKPublishPostTestCell.m; sourceTree = "<group>"; };
+		BCB83D08216DD7C900F2CDB4 /* UIColor+SKColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+SKColor.h"; sourceTree = "<group>"; };
+		BCB83D09216DD7C900F2CDB4 /* UIColor+SKColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SKColor.m"; sourceTree = "<group>"; };
+		BCB83D2A216E01F900F2CDB4 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		BCB83D2B216E01F900F2CDB4 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		BCFB1CA32F0803750F466DBF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D1625485E699474859144DFC /* Pods-SKPhotoPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoPicker_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,7 +94,6 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				3ADE54ECE10C10DAF5148C9A /* Pods_SKPhotoPicker_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +142,8 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* SKViewController.h */,
 				6003F5A6195388D20070C39A /* SKViewController.m */,
+				BCB83D05216DD24900F2CDB4 /* SKPublishPostTestCell.h */,
+				BCB83D06216DD24900F2CDB4 /* SKPublishPostTestCell.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -152,6 +159,10 @@
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* SKPhotoPicker-Prefix.pch */,
+				BCB83D08216DD7C900F2CDB4 /* UIColor+SKColor.h */,
+				BCB83D09216DD7C900F2CDB4 /* UIColor+SKColor.m */,
+				BCB83D2B216E01F900F2CDB4 /* UITextView+Placeholder.h */,
+				BCB83D2A216E01F900F2CDB4 /* UITextView+Placeholder.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -190,8 +201,6 @@
 			children = (
 				D1625485E699474859144DFC /* Pods-SKPhotoPicker_Example.debug.xcconfig */,
 				B4EA549C9054EC9780501EEE /* Pods-SKPhotoPicker_Example.release.xcconfig */,
-				3F5CE24B0CC6A5C4E65EFAED /* Pods-SKPhotoPicker_Tests.debug.xcconfig */,
-				724968A92FF932058B245C0B /* Pods-SKPhotoPicker_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -223,12 +232,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "SKPhotoPicker_Tests" */;
 			buildPhases = (
-				C4B2710DD5F3F7F576960C5F /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
-				6E27D832FC5AF26654388459 /* [CP] Embed Pods Frameworks */,
-				B249DA5C2200D97F8A8BC8E9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,6 +256,10 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Xcoder1011;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = H9J886PZ98;
+						ProvisioningStyle = Manual;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -315,36 +325,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6E27D832FC5AF26654388459 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoPicker_Tests/Pods-SKPhotoPicker_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B249DA5C2200D97F8A8BC8E9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoPicker_Tests/Pods-SKPhotoPicker_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BB597A9EB38D9DDA1A14CC90 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,24 +345,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C4B2710DD5F3F7F576960C5F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SKPhotoPicker_Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E98F419C508A89C4CB4E146F /* [CP] Copy Pods Resources */ = {
@@ -408,8 +370,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* SKAppDelegate.m in Sources */,
+				BCB83D2C216E01F900F2CDB4 /* UITextView+Placeholder.m in Sources */,
+				BCB83D07216DD24900F2CDB4 /* SKPublishPostTestCell.m in Sources */,
 				6003F5A7195388D20070C39A /* SKViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				BCB83D0A216DD7C900F2CDB4 /* UIColor+SKColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,12 +502,17 @@
 			baseConfigurationReference = D1625485E699474859144DFC /* Pods-SKPhotoPicker_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = H9J886PZ98;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SKPhotoPicker/SKPhotoPicker-Prefix.pch";
 				INFOPLIST_FILE = "SKPhotoPicker/SKPhotoPicker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2227da1f-1ef0-4aa4-847e-046e00c8c9a7";
+				PROVISIONING_PROFILE_SPECIFIER = SC_Any_App;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -552,19 +522,23 @@
 			baseConfigurationReference = B4EA549C9054EC9780501EEE /* Pods-SKPhotoPicker_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = H9J886PZ98;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SKPhotoPicker/SKPhotoPicker-Prefix.pch";
 				INFOPLIST_FILE = "SKPhotoPicker/SKPhotoPicker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2227da1f-1ef0-4aa4-847e-046e00c8c9a7";
+				PROVISIONING_PROFILE_SPECIFIER = SC_Any_App;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F5CE24B0CC6A5C4E65EFAED /* Pods-SKPhotoPicker_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -588,7 +562,6 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 724968A92FF932058B245C0B /* Pods-SKPhotoPicker_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

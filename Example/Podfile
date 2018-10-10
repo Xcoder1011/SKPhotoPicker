@@ -1,11 +1,7 @@
 use_frameworks!
+platform :ios, '9.1'
 
 target 'SKPhotoPicker_Example' do
-  pod 'SKPhotoPicker'
+     pod 'SKPhotoPicker'
   # pod 'SKPhotoPicker', :path => '../'
-  target 'SKPhotoPicker_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end

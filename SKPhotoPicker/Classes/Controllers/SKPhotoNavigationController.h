@@ -38,7 +38,7 @@
                     pushPickerVC:(BOOL)pushPickerVC
                 allowSelectImage:(BOOL)allowSelectImage
                 allowSelectVideo:(BOOL)allowSelectVideo
-            maxSelectPhotoSKount:(NSInteger)maxSelectPhotoSKount;
+            maxSelectPhotosCount:(NSInteger)maxSelectPhotosCount;
 
 - (void)didSelectDoneEvent;
 - (void)showMaxPhotosCountAlert;

@@ -10,7 +10,18 @@
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
+#define kDeviceWidth  [UIScreen mainScreen].bounds.size.width
+#define kDeviceHeight  [UIScreen mainScreen].bounds.size.height
+#define kWeakObj(obj)   __weak typeof(obj) weak##obj = obj;
+#define kStrongObj(obj)    __strong typeof(obj) obj = weak##obj;
+
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
+
+#import <Masonry/Masonry.h>
+#import <SDWebImage/UIImage+GIF.h>
+#import "UIColor+SKColor.h"
+#import "UITextView+Placeholder.h"
+
 #endif

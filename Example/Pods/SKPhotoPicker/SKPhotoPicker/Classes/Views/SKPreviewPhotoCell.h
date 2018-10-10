@@ -8,6 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
+@class SKPhotoModel;
+
 @interface SKPreviewPhotoCell : UICollectionViewCell
+
+@property (nonatomic, assign) BOOL supportLivePhoto;
+
+@property (nonatomic, strong) SKPhotoModel *model;
+
+@property (nonatomic, copy) void (^singleTapGestureBlock)();
+
+- (void)resetSubViewsFrame;
+
+- (void)startPlayAnimationView;
+- (void)stopPlayAnimationView;
+
+
+@end
+
+
+@class SKAlbumModel;
+@interface SKAlbumListPhotoCell : UITableViewCell
+
+@property (nonatomic, strong) SKAlbumModel *model;
 
 @end

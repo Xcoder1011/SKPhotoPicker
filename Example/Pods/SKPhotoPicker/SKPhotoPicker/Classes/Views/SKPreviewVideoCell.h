@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class SKPhotoModel;
 @interface SKPreviewVideoCell : UICollectionViewCell
+
+@property (nonatomic, copy) void (^singleTapGestureBlock)(BOOL hideNav);
+
+@property (nonatomic, strong) SKPhotoModel *model;
+
+- (void)resetSubViewsFrame;
 
 @end
