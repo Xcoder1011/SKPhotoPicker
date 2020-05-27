@@ -270,6 +270,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -512,7 +513,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2227da1f-1ef0-4aa4-847e-046e00c8c9a7";
-				PROVISIONING_PROFILE_SPECIFIER = SC_Any_App;
+				PROVISIONING_PROFILE_SPECIFIER = "chelun any app";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -532,7 +533,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2227da1f-1ef0-4aa4-847e-046e00c8c9a7";
-				PROVISIONING_PROFILE_SPECIFIER = SC_Any_App;
+				PROVISIONING_PROFILE_SPECIFIER = "chelun any app";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

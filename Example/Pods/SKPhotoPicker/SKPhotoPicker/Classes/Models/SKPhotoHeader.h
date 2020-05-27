@@ -16,6 +16,7 @@
 #import "SKPhotoPreviewController.h"
 #import "SKPhotoAlbumListController.h"
 #import "SKPhotoModel.h"
+#import "UIDevice+SKPhotoPicker.h"
 
 #ifndef SKPhotoHeader_h
 #define SKPhotoHeader_h
@@ -44,7 +45,7 @@ typedef NS_ENUM(NSInteger, SKPhotoAuthorizationStatus) {
     SKPhotoAuthorizationStatusAuthorized    = 3, // 已授权
     SKPhotoAuthorizationStatusNotSupport    = 4, // 硬件等不支持
     
-} PHOTOS_AVAILABLE_IOS_TVOS(8_0, 10_0);
+};
 
 
 static inline bool dispatch_is_main_queue() {
@@ -72,11 +73,30 @@ static inline void dispatch_async_on_global_queue(void(^block)(void)) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
 
-static inline void dispatch_async_on_globalqueue_then_on_mainqueue(void(^globalblock)(void),void(^mainblock)()){
+static inline void dispatch_async_on_globalqueue_then_on_mainqueue(void(^globalblock)(void),void(^mainblock)(void)){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         globalblock();
         dispatch_async_on_main_queue(mainblock);
     });
+    
+}
+
+static inline BOOL isIPhoneXDevice() {
+    
+#ifdef __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        NSString *modelName = [UIDevice currentDevice].sk_machineModelName;
+        if ([modelName hasPrefix:@"iPhone X"]) {
+            return YES;
+        } else {
+            return [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom > 0.f;
+        }
+    } else {
+        return NO;
+    }
+#else
+    return NO;
+#endif
     
 }
 

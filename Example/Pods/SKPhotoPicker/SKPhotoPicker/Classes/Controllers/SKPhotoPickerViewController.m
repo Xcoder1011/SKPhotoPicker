@@ -57,11 +57,11 @@
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadData];
     } completion:^(BOOL finished) {
-        [self SKrollToBottom];
+        [self scrollToBottom];
     }];
 }
 
-- (void)SKrollToBottom {
+- (void)scrollToBottom {
     
     if (self.items && self.items.count > 0 && self.shouldScrollToBottom) {
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem: self.items.count - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
@@ -69,6 +69,10 @@
 }
 
 - (void)addBottomBar {
+    
+//    CGFloat height = isIPhoneXDevice() ? (44 + kSafeBottomViewPadding) : 44;
+//    CGFloat offsetY = isIPhoneXDevice() ?  (kSafeBottomViewPadding/2.0) : 0;
+    
     _bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     _bottomBar.backgroundColor = kBottomBarColor;
     [self.view addSubview:_bottomBar];

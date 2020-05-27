@@ -10,6 +10,11 @@
 #import <Photos/Photos.h>
 #import "SKPhotoModel.h"
 
+typedef NS_ENUM(NSUInteger, SKChoosePhotoMode) {
+    SKChoosePhotoModeNormal = 0,   // 默认模式
+    SKChoosePhotoModePublishPost,  // 支持拍照
+};
+
 @protocol SKPhotoNavigationControllerDelegate;
 
 @interface SKPhotoNavigationController : UINavigationController
@@ -21,6 +26,8 @@
 @property(nonatomic, assign) BOOL supportLivePhoto;
 // default 9
 @property(nonatomic, assign , readonly) NSInteger maxSelectPhotosCount;
+// 业务场景
+@property(nonatomic, assign) SKChoosePhotoMode chooseMode;
 
 @property(nonatomic, strong , readonly) NSArray<SKAlbumModel *> *albumsList;
 
@@ -52,5 +59,11 @@
 - (void)imagePickerController:(SKPhotoNavigationController *)picker didFinishPickPhotosItems:(NSArray <SKPhotoModel *> *)currentSeletedItems;
 // 视频 （只能选择一个视频）
 - (void)imagePickerController:(SKPhotoNavigationController *)picker didFinishPickVideo:(SKPhotoModel *)videoItem sourceAssets:(PHAsset *)asset;
+// 去拍照
+- (void)imagePickerController:(SKPhotoNavigationController *)picker takeCameraWithItems:(NSArray <SKPhotoModel *> *)currentSeletedItems;
+// 即将消失
+- (void)imagePickerController:(SKPhotoNavigationController *)picker willDismissViewControllerWithItems:(NSArray <SKPhotoModel *> *)currentSeletedItems;
+// 完全消失
+- (void)imagePickerController:(SKPhotoNavigationController *)picker didDismissViewControllerWithItems:(NSArray <SKPhotoModel *> *)currentSeletedItems fromCancel:(BOOL)cancel;
 
 @end

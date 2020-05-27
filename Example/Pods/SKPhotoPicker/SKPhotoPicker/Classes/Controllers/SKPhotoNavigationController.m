@@ -117,24 +117,46 @@
     pan.delegate = self;
     [self.view addGestureRecognizer:pan];
     self.interactivePopGestureRecognizer.enabled = NO;
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    self.navigationBar.translucent = YES;
-    self.navigationBar.barTintColor = kBarTintColor;
+    
+    self.navigationBar.barTintColor = [UIColor clearColor];
+    [self.navigationBar setBackgroundImage:[self getImageWithColor: kBarTintColor] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setShadowImage:[UIImage new]];
+
     self.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                 NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:17]}];
+                                                NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:17]}];
 }
 
+-(UIImage *)getImageWithColor:(UIColor *)color{
+    
+    CGSize colorSize= CGSizeMake(1, 1);
+    UIGraphicsBeginImageContext(colorSize);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    UIImage *img=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
 
 - (void)didSelectDoneEvent {
     
     if (self.pickerDelegate && [self.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickPhotosItems:)]) {
         [self.pickerDelegate imagePickerController:self didFinishPickPhotosItems:[self.currentSeletedItems copy]];
     }
+    
+    if (self.pickerDelegate && [self.pickerDelegate respondsToSelector:@selector(imagePickerController:willDismissViewControllerWithItems:)]) {
+        [self.pickerDelegate imagePickerController:self willDismissViewControllerWithItems:[self.currentSeletedItems copy]];
+    }
+    
+    kSKWeakObj(self)
     [self dismissViewControllerAnimated:YES completion:^{
+        if (weakself.pickerDelegate && [weakself.pickerDelegate respondsToSelector:@selector(imagePickerController:didDismissViewControllerWithItems:fromCancel:)]) {
+            [weakself.pickerDelegate imagePickerController:weakself didDismissViewControllerWithItems:[weakself.currentSeletedItems copy] fromCancel:NO];
+        }
     }];
 }
-
 
 - (void)showMaxPhotosCountAlert {
     

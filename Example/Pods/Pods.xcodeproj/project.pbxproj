@@ -100,6 +100,8 @@
 		B56BAED3C280BA7454B4C8CA7EB69DD4 /* SKPhotoNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D168BFEA8099AA60BE8D385499B46B46 /* SKPhotoNavigationController.m */; };
 		B7F2D1F228DD3DE041A64E27515758BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52270190D74C3EEC59A5008605C2F865 /* Foundation.framework */; };
 		BBE469A8A05644E12E413CBB8B0AC960 /* SDImageCacheConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 275EF9B49E62679AACC017D9443A3AC1 /* SDImageCacheConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC8B087C247E770400C91F9B /* UIDevice+SKPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = BC8B087A247E770400C91F9B /* UIDevice+SKPhotoPicker.h */; };
+		BC8B087D247E770400C91F9B /* UIDevice+SKPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8B087B247E770400C91F9B /* UIDevice+SKPhotoPicker.m */; };
 		BCB83D29216DFB0400F2CDB4 /* SKPhotoPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BCB83D28216DFB0400F2CDB4 /* SKPhotoPicker.bundle */; };
 		C0A16E00B4BC2D88A7833D5DAED62942 /* NSArray+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D543A5E9FD0613C8588C83D2BD6045E /* NSArray+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7A5BE59113D788652B80E2459532330 /* SDWebImageCoderHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E6FE0358D051B0C3A6DCB10201562CC6 /* SDWebImageCoderHelper.m */; };
@@ -256,6 +258,8 @@
 		BA4A4CE259741125145AEC80E0017EC2 /* SDWebImageTransition.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageTransition.m; path = SDWebImage/SDWebImageTransition.m; sourceTree = "<group>"; };
 		BB8BE450E4DF1445DCD8BA58276F0923 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		BBA20087E98F2F980F6152175285DEE2 /* SDWebImageCompat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageCompat.m; path = SDWebImage/SDWebImageCompat.m; sourceTree = "<group>"; };
+		BC8B087A247E770400C91F9B /* UIDevice+SKPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+SKPhotoPicker.h"; path = "SKPhotoPicker/Classes/Models/UIDevice+SKPhotoPicker.h"; sourceTree = "<group>"; };
+		BC8B087B247E770400C91F9B /* UIDevice+SKPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+SKPhotoPicker.m"; path = "SKPhotoPicker/Classes/Models/UIDevice+SKPhotoPicker.m"; sourceTree = "<group>"; };
 		BCB83D28216DFB0400F2CDB4 /* SKPhotoPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SKPhotoPicker.bundle; path = SKPhotoPicker/Assets/SKPhotoPicker.bundle; sourceTree = "<group>"; };
 		BE3BB32C4F4227C786E8FD176C70A846 /* Pods-SKPhotoPicker_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SKPhotoPicker_Example-umbrella.h"; sourceTree = "<group>"; };
 		BF76CCB0ACFEA165C1718A0604A63C61 /* SDWebImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageManager.h; path = SDWebImage/SDWebImageManager.h; sourceTree = "<group>"; };
@@ -418,6 +422,8 @@
 				D168BFEA8099AA60BE8D385499B46B46 /* SKPhotoNavigationController.m */,
 				9640290A16EB9AE46B038FCDE7EEBC34 /* SKPhotoPickerViewController.h */,
 				2A661671BB33D40FE37638EBEBF8D047 /* SKPhotoPickerViewController.m */,
+				BC8B087A247E770400C91F9B /* UIDevice+SKPhotoPicker.h */,
+				BC8B087B247E770400C91F9B /* UIDevice+SKPhotoPicker.m */,
 				86D53635B28DE54050FFF075129FA1D5 /* SKPhotoPreviewController.h */,
 				12A7D486752E2F3992329EEF0A4816FD /* SKPhotoPreviewController.m */,
 				F830C747B07B00A186DABF9359D5F115 /* SKPreviewPhotoCell.h */,
@@ -624,6 +630,7 @@
 				1DCB6525832635D73A2B8F6C41F01AAA /* SKPhotoPicker-umbrella.h in Headers */,
 				2E369A075979C93A38AB8BD71C7DEDFD /* SKPhotoPickerViewController.h in Headers */,
 				F7ED2229607FFC1F4B419190DCE6A956 /* SKPhotoPreviewController.h in Headers */,
+				BC8B087C247E770400C91F9B /* UIDevice+SKPhotoPicker.h in Headers */,
 				5A2D72A4ECA7EFC08B7E6D5093FF23B2 /* SKPreviewPhotoCell.h in Headers */,
 				56EE5C0D816910970C6D78814F1F49DF /* SKPreviewVideoCell.h in Headers */,
 			);
@@ -778,6 +785,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
@@ -862,6 +870,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				358918E1469209E3FA6B87C89A07800C /* SKPhotoAlbumListController.m in Sources */,
+				BC8B087D247E770400C91F9B /* UIDevice+SKPhotoPicker.m in Sources */,
 				7611EBDD355D88457B33CF90F4D4F031 /* SKPhotoCell.m in Sources */,
 				7A170D2EE9CF0CA272FACBCA86374D42 /* SKPhotoManager.m in Sources */,
 				88FAFE5375D3E5E93657FFDC63896DE0 /* SKPhotoModel.m in Sources */,
