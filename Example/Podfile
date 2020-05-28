@@ -1,7 +1,9 @@
 use_frameworks!
 platform :ios, '9.1'
 
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'SKPhotoPicker_Example' do
-     pod 'SKPhotoPicker'
-  # pod 'SKPhotoPicker', :path => '../'
+#     pod 'SKPhotoPicker'
+   pod 'SKPhotoPicker', :path => '../'
 end
