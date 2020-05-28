@@ -15,8 +15,8 @@ Pod::Spec.new do |s|
   s.dependency "SDWebImage", "~> 4.0"
   s.dependency "Masonry"
   
-  s.source_files = 'SKPhotoPicker/Classes/**/*'
+  # s.source_files = 'SKPhotoPicker/**/*'
   s.resources = 'SKPhotoPicker/Assets/*.bundle'
-  s.frameworks = 'UIKit'
+  s.frameworks = 'UIKit','Foundation'
   
 end
