@@ -16,7 +16,7 @@
 #import "SKPhotoPreviewController.h"
 #import "SKPhotoAlbumListController.h"
 #import "SKPhotoModel.h"
-#import "UIDevice+SKPhotoPicker.h"
+// #import "UIDevice+SKPhotoPicker.h"
 
 #ifndef SKPhotoHeader_h
 #define SKPhotoHeader_h
@@ -85,7 +85,7 @@ static inline BOOL isIPhoneXDevice() {
     
 #ifdef __IPHONE_11_0
     if (@available(iOS 11.0, *)) {
-        NSString *modelName = [UIDevice currentDevice].sk_machineModelName;
+        NSString *modelName = [UIDevice currentDevice].name;
         if ([modelName hasPrefix:@"iPhone X"]) {
             return YES;
         } else {
