@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SKPhotoPicker"
-  s.version      = "1.0.2"
+  s.version      = "1.0.4"
   s.summary      = "Easy to use photo album by PhotoKit."
   s.homepage     = "https://github.com/Xcoder1011/SKPhotoPicker"
   s.license      = "MIT"
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.dependency "SDWebImage", "~> 4.0"
   s.dependency "Masonry"
   
-  # s.source_files = 'SKPhotoPicker/**/*'
+  # s.source_files = 'SKPhotoPicker/Classes/**/*'
   s.resources = 'SKPhotoPicker/Assets/*.bundle'
   s.frameworks = 'UIKit','Foundation'
   
