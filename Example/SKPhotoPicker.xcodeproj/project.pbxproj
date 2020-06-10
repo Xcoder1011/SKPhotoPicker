@@ -217,7 +217,6 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				BB597A9EB38D9DDA1A14CC90 /* [CP] Embed Pods Frameworks */,
-				E98F419C508A89C4CB4E146F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -332,7 +331,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SKPhotoPicker/SKPhotoPicker.framework",
@@ -345,22 +344,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E98F419C508A89C4CB4E146F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SKPhotoPicker_Example/Pods-SKPhotoPicker_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
