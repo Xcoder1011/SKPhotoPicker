@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, SKPhotoAuthorizationStatus) {
     SKPhotoAuthorizationStatusAuthorized    = 3, // 已授权
     SKPhotoAuthorizationStatusNotSupport    = 4, // 硬件等不支持
     
-} PHOTOS_AVAILABLE_IOS_TVOS(8_0, 10_0);
+};
 
 
 static inline bool dispatch_is_main_queue() {
