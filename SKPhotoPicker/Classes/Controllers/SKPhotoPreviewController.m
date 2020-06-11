@@ -27,6 +27,9 @@
     
     UIView *_tipBar;
     UILabel *_tipLabel;
+    
+    UILabel *_currentIndexLabel;
+    BOOL _isShowedAnimated; // 第一次展示动画
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -44,18 +47,20 @@
     [self.navigationController setNavigationBarHidden:YES];
     [UIApplication sharedApplication].statusBarHidden = YES;
     if (self.currentIndex >= 0) [self.collectionView setContentOffset:CGPointMake((self.view.frame.size.width + kPreviewPadding) * self.currentIndex, 0) animated:NO];
-    [self refreshTopBottomBarStatus];
+    if (self.fromPhotoPicker) {
+        [self refreshTopBottomBarStatus];
+    } else {
+        [self refreshCurrentIndexLabel];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO];
-    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self initialConfig];
     [self addNavBarButtons];
@@ -76,23 +81,41 @@
 
 - (void)addNavBarButtons {
     
-    _naviBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    _naviBar.backgroundColor = kBarTintColor;
+    CGFloat navHeight = 44 + [[UIApplication sharedApplication] statusBarFrame].size.height;
+    _naviBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, navHeight)];
+    _naviBar.backgroundColor = self.fromPhotoPicker ? kBarTintColor : [UIColor clearColor];
+
+    CGFloat topSpace = [[UIApplication sharedApplication] statusBarFrame].size.height + 2;
+    _backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, topSpace, 24, 40)];
     
-    _backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 12, 24, 40)];
     [_backButton setImage:[UIImage imageNamedFromSKBundle:@"arrow_left_white"] forState:UIControlStateNormal];
     [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_backButton addTarget:self action:@selector(backButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    _selectButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 56/2.0 - 10, 18, 56/2.0, 56/2.0)];
-    [_selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"select_white"] forState:UIControlStateNormal];
-    [_selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"picture_select_big"] forState:UIControlStateSelected];
-    [_selectButton addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectButton.hidden = NO;
-    
     [_naviBar addSubview:_selectButton];
     [_naviBar addSubview:_backButton];
+    [self.view addSubview:_naviBar];
+    
+    if (self.fromPhotoPicker) {
+        _selectButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 56/2.0 - 10, [[UIApplication sharedApplication] statusBarFrame].size.height + (44 - 56/2.0)/2.0, 56/2.0, 56/2.0)];
+        [_selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"select_white"] forState:UIControlStateNormal];
+        [_selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"picture_select_big"] forState:UIControlStateSelected];
+        [_selectButton addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
+        [_naviBar addSubview:_selectButton];
+        
+    } else {
+        _currentIndexLabel = [[UILabel alloc] init];
+        _currentIndexLabel.textColor = [UIColor whiteColor];
+        _currentIndexLabel.font = [UIFont boldSystemFontOfSize:16];
+        [_naviBar addSubview:_currentIndexLabel];
+        
+        [_currentIndexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_naviBar.mas_centerX);
+            make.top.mas_equalTo(topSpace);
+            make.height.mas_equalTo(40);
+        }];
+    }
+    
     [self.view addSubview:_naviBar];
 }
 
@@ -117,7 +140,10 @@
 
 - (void)addBottomBarButtons {
     
-    _photoBottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+    CGFloat height = sk_isIPhoneXSeries() ? (44 + kSafeBottomViewPadding) : 44;
+    CGFloat offsetY = sk_isIPhoneXSeries() ?  (kSafeBottomViewPadding/2.0) : 0;
+    
+    _photoBottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - height, self.view.frame.size.width, height)];
     _photoBottomBar.backgroundColor = kBarTintColor;
     
     _doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 70, 6, 60, 32)];
@@ -130,8 +156,21 @@
     _doneButton.layer.masksToBounds = YES;
     
     [_photoBottomBar addSubview:_doneButton];
-    [_naviBar addSubview:_backButton];
     [self.view addSubview:_photoBottomBar];
+    
+    [_photoBottomBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view.mas_right).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.bottom.equalTo(self.view.mas_bottom).offset(0);
+        make.height.mas_equalTo(height);
+    }];
+    
+    [_doneButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_photoBottomBar.mas_right).offset(-10);
+        make.centerY.equalTo(_photoBottomBar.mas_centerY).offset( -offsetY);;
+        make.width.mas_equalTo(@60);
+        make.height.mas_equalTo(@30);
+    }];
 }
 
 - (void)backButtonClick {
@@ -179,14 +218,14 @@
 - (void)showAnimationWith:(UIView *)view {
     
     [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-        [view.layer setValue:@(1.2) forKeyPath:@"transform.SKale"];
+        [view.layer setValue:@(1.2) forKeyPath:@"transform.scale"];
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-            [view.layer setValue: @(0.90) forKeyPath:@"transform.SKale"];
+            [view.layer setValue: @(0.90) forKeyPath:@"transform.scale"];
             
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-                [view.layer setValue:@(1.0) forKeyPath:@"transform.SKale"];
+                [view.layer setValue:@(1.0) forKeyPath:@"transform.scale"];
             } completion:nil];
         }];
     }];
@@ -217,13 +256,14 @@
     [nav didSelectDoneEvent];
 }
 
+- (void)refreshCurrentIndexLabel {
+    _currentIndexLabel.text = [NSString stringWithFormat:@"%zd/%zd",_currentIndex + 1,self.items.count];
+}
 
 - (void)refreshTopBottomBarStatus {
     
     SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
-    
     _selectButton.hidden = model.mediaType == SKAssetMediaTypeVideo ? YES : NO;
-    
     _selectButton.selected = model.isSelected;
     
     if (model.isSelected) {
@@ -248,14 +288,18 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)SKrollViewDidScroll:(UIScrollView *)SKrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    CGFloat offSetWidth = SKrollView.contentOffset.x;
+    CGFloat offSetWidth = scrollView.contentOffset.x;
     offSetWidth = offSetWidth +  ((self.view.frame.size.width + kPreviewPadding) * 0.5);
     NSInteger currentIndex = offSetWidth / (self.view.frame.size.width + kPreviewPadding);
     if (currentIndex < self.items.count && _currentIndex != currentIndex) {
         _currentIndex = currentIndex;
-        [self refreshTopBottomBarStatus];
+        if (self.fromPhotoPicker) {
+            [self refreshTopBottomBarStatus];
+        } else {
+            [self refreshCurrentIndexLabel];
+        }
     }
 }
 

@@ -398,12 +398,12 @@
             mixedTransform = CGAffineTransformRotate(translateToCenter,M_PI);
             videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.width,videoTrack.naturalSize.height);
             
-        } else if(degrees == 270){
+        } else {
             // 顺时针旋转270°
             translateToCenter = CGAffineTransformMakeTranslation(0.0, videoTrack.naturalSize.width);
             mixedTransform = CGAffineTransformRotate(translateToCenter,M_PI_2*3.0);
             videoComposition.renderSize = CGSizeMake(videoTrack.naturalSize.height,videoTrack.naturalSize.width);
-        } else {}
+        }
         
         AVMutableVideoCompositionInstruction *roateInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
         roateInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, [videoAsset duration]);
@@ -525,7 +525,7 @@
     if (version >= 800 && version <= 802) {
         return [albumName isEqualToString:@"最近添加"] || [albumName isEqualToString:@"Recently Added"];
     } else {
-        return [albumName isEqualToString:@"Camera Roll"] || [albumName isEqualToString:@"相机胶卷"] || [albumName isEqualToString:@"所有照片"] || [albumName isEqualToString:@"All Photos"];
+        return [albumName isEqualToString:@"Camera Roll"] || [albumName isEqualToString:@"相机胶卷"] || [albumName isEqualToString:@"所有照片"] || [albumName isEqualToString:@"All Photos"] || [albumName isEqualToString:@"Recents"];
     }
 }
 
@@ -694,8 +694,11 @@
 @implementation UIImage (SKPhotoManager)
 
 + (UIImage *)imageNamedFromSKBundle:(NSString *)name {
-    UIImage *image = [UIImage imageNamed:[@"SKPhotoPicker.bundle" stringByAppendingPathComponent:name]];
-    if (image) return image;
+    Class class = NSClassFromString(@"SKPhotoManager");
+    NSBundle *currentBundle = [NSBundle bundleForClass:class];
+    NSString *bundlePath = [currentBundle pathForResource:@"SKPhotoPicker" ofType:@"bundle"];
+    NSString *imageName = [bundlePath stringByAppendingPathComponent:name];
+    UIImage *image = [UIImage imageWithContentsOfFile:imageName];
     if (!image)  image = [UIImage imageNamed:name];
     return image;
 }

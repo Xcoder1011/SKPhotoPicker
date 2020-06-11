@@ -32,9 +32,7 @@
 #define SINGLE_LINE_ADJUST_OFFSET   ((1 / [UIScreen mainScreen].scale) / 2)
 
 #define kPreviewPadding  20
-
-#define kSKWeakObj(obj)   __weak typeof(obj) weak##obj = obj;
-#define kSKStrongObj(obj)    __strong typeof(obj) obj = weak##obj;
+#define kSafeBottomViewPadding  (sk_isIPhoneXSeries() ? 34.f : 0.f) //iphoneX 安全区域
 
 typedef NS_ENUM(NSInteger, SKPhotoAuthorizationStatus) {
     
@@ -43,7 +41,6 @@ typedef NS_ENUM(NSInteger, SKPhotoAuthorizationStatus) {
     SKPhotoAuthorizationStatusDenied        = 2, // 拒绝
     SKPhotoAuthorizationStatusAuthorized    = 3, // 已授权
     SKPhotoAuthorizationStatusNotSupport    = 4, // 硬件等不支持
-    
 };
 
 
@@ -67,17 +64,25 @@ static inline void dispatch_sync_on_main_queue(void(^block)(void)) {
     }
 }
 
-
 static inline void dispatch_async_on_global_queue(void(^block)(void)) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
 
-static inline void dispatch_async_on_globalqueue_then_on_mainqueue(void(^globalblock)(),void(^mainblock)()){
+static inline void dispatch_async_on_globalqueue_then_on_mainqueue(void(^globalblock)(void),void(^mainblock)(void)){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         globalblock();
         dispatch_async_on_main_queue(mainblock);
     });
-    
+}
+
+static inline BOOL sk_isIPhoneXSeries() {
+    if (@available(iOS 11.0, *)) {
+        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        if (mainWindow.safeAreaInsets.bottom > 0.0) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 #endif /* SKPhotoHeader_h */

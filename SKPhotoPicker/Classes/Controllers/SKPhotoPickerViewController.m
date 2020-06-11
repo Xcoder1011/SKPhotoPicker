@@ -57,11 +57,11 @@
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadData];
     } completion:^(BOOL finished) {
-        [self SKrollToBottom];
+        [self scrollToBottom];
     }];
 }
 
-- (void)SKrollToBottom {
+- (void)scrollToBottom {
     
     if (self.items && self.items.count > 0 && self.shouldScrollToBottom) {
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem: self.items.count - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
@@ -69,10 +69,12 @@
 }
 
 - (void)addBottomBar {
-    _bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    CGFloat height = sk_isIPhoneXSeries() ? (44 + kSafeBottomViewPadding) : 44;
+    CGFloat offsetY = sk_isIPhoneXSeries() ?  (kSafeBottomViewPadding/2.0) : 0;
+    _bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     _bottomBar.backgroundColor = kBottomBarColor;
     [self.view addSubview:_bottomBar];
-    
+    __weak typeof(self) weakself = self;
     UIButton * (^quickCreatBtn)(UIColor *backgroundColor, NSString *title, BOOL enabled, UIFont *font, SEL sel) = ^(UIColor *backgroundColor, NSString *title, BOOL enabled, UIFont *font, SEL sel) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setBackgroundColor:backgroundColor];
@@ -82,7 +84,7 @@
         btn.enabled = enabled;
         btn.frame = CGRectMake(0, 0, 60, 32);
         [btn addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
-        [_bottomBar addSubview:btn];
+        [weakself.bottomBar addSubview:btn];
         return btn;
     };
     
@@ -96,19 +98,19 @@
         make.right.equalTo(self.view.mas_right).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
-        make.height.mas_equalTo(@44);
+        make.height.mas_equalTo(height);
     }];
     
     [_doneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_bottomBar.mas_right).offset(-10);
-        make.centerY.equalTo(_bottomBar.mas_centerY);
+        make.centerY.equalTo(_bottomBar.mas_centerY).offset(-offsetY);;
         make.width.mas_equalTo(@60);
         make.height.mas_equalTo(@30);
     }];
     
     [_previewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_bottomBar.mas_left).offset(5);
-        make.centerY.equalTo(_bottomBar.mas_centerY);
+        make.centerY.equalTo(_bottomBar.mas_centerY).offset( -offsetY);
         make.width.mas_equalTo(@60);
         make.height.mas_equalTo(@32);
     }];
@@ -131,8 +133,8 @@
     controller.selectItemBlock = ^(SKPhotoModel *item) {
         [weakself selectItemEvent:item];
     };
-    
     controller.currentIndex = 0;
+    controller.fromPhotoPicker = YES;
     SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
     if (nav.currentSeletedItems && nav.currentSeletedItems > 0) {
         controller.items = [NSMutableArray arrayWithArray:nav.currentSeletedItems];
@@ -186,10 +188,10 @@
         collectionView.delegate = self;
         collectionView.alwaysBounceHorizontal = NO;
         [self.view addSubview:collectionView];
-        
+        CGFloat padding = sk_isIPhoneXSeries() ? (44 + kSafeBottomViewPadding) : 44;
         [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.right.equalTo(self.view).offset(0);
-            make.bottom.equalTo(self.view.mas_bottom).offset(-44);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-padding);
         }];
         
         [collectionView registerClass:[SKPhotoCell class] forCellWithReuseIdentifier:NSStringFromClass([SKPhotoCell class])];
@@ -243,6 +245,7 @@
         [weakself selectItemEvent:item];
     };
     controller.currentIndex = indexPath.row;
+    controller.fromPhotoPicker = YES;
     controller.items = self.items;
     [self.navigationController pushViewController:controller animated:YES];
 }

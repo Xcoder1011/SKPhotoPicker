@@ -51,6 +51,7 @@
     
     if (self) {
         [self setNavigationBarHidden:NO];
+        self.modalPresentationStyle = UIModalPresentationFullScreen;
         self.pickerDelegate = delegate;
         _allowSelectVideo = allowSelectVideo;
         _allowSelectImage = allowSelectImage;
@@ -67,14 +68,14 @@
                 make.centerY.equalTo(self.view.mas_centerY);
                 make.centerX.equalTo(self.view.mas_centerX);
             }];
-            
+            __weak typeof(self) weakself = self;
             [SKPhotoManager photosAuthorized:^(PHAuthorizationStatus status) {
                 if (status == PHAuthorizationStatusAuthorized) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [_tipLabel removeFromSuperview];
-                        _tipLabel = nil;
+                        [weakself.tipLabel removeFromSuperview];
+                        weakself.tipLabel = nil;
                         if (pushPickerVC) {
-                            [self pushToPickerVC];
+                            [weakself pushToPickerVC];
                         }
                     });
                 }
