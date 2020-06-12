@@ -21,5 +21,23 @@
 @property (nonatomic, assign) BOOL  supportPanGesture;
 // 图片选择展示预览界面 不一样， default NO
 @property (nonatomic, assign) BOOL  fromPhotoPicker;
+// default YES, 保存、分享 等操作
+@property (nonatomic, assign) BOOL  showActionSheet;
+// default NO, 顶部返回按钮等nav
+@property (nonatomic, assign) BOOL hideToolBar;
+// default YES
+@property (nonatomic, assign) BOOL enableFirstShowAnimation;
+// default YES
+@property (nonatomic, assign) BOOL supportSingleTapGesture;
+
+// 展示界面
+- (void)presentFromController:(UIViewController *)vc;
+- (void)present;
+
+@end
+
+@interface UIView (SCPhotoPreviewController)
+
+@property (nonatomic, strong) id sk_Item;
 
 @end

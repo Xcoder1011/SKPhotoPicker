@@ -9,20 +9,19 @@
 #import <UIKit/UIKit.h>
 
 @class SKPhotoModel;
-
 @interface SKPreviewPhotoCell : UICollectionViewCell
 
 @property (nonatomic, assign) BOOL supportLivePhoto;
-
 @property (nonatomic, strong) SKPhotoModel *model;
 
-@property (nonatomic, copy) void (^singleTapGestureBlock)();
+@property (nonatomic, copy) void (^singleTapGestureBlock)(void);
+@property (nonatomic, copy) void (^longProgressGestureBlock)(void);
 
 - (void)resetSubViewsFrame;
+- (void)reSetAnimateImageFrame:(CGRect)frame;
 
 - (void)startPlayAnimationView;
 - (void)stopPlayAnimationView;
-
 
 @end
 

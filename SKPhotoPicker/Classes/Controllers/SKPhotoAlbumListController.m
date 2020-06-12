@@ -16,6 +16,7 @@
 #else
 #import "Masonry.h"
 #endif
+
 static CGFloat const cellHeight = 70.f;
 
 @interface SKPhotoAlbumListController () <UITableViewDelegate, UITableViewDataSource>
@@ -29,41 +30,36 @@ static CGFloat const cellHeight = 70.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"相册";
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     [self addNavBarButtons];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:animated];
     [self preparedData];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 - (void)preparedData {
-    
     SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
     if (!_albumsList && nav.albumsList && nav.albumsList > 0) {
         _albumsList = [[NSMutableArray alloc] initWithArray:nav.albumsList];
         [self.tableview reloadData];
     }
     if (_albumsList.count > 0) {
-        
         SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
-        
         if (nav.currentSeletedLocalIdentifier && nav.currentSeletedLocalIdentifier > 0) {
-            
             [_albumsList enumerateObjectsUsingBlock:^(SKAlbumModel * _Nonnull albumModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                
                 [albumModel.items enumerateObjectsUsingBlock:^(SKPhotoModel * _Nonnull photoModel, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
                     if ([nav.currentSeletedLocalIdentifier containsObject:photoModel.localIdentifier]) {
                         NSUInteger index = [nav.currentSeletedLocalIdentifier indexOfObject:photoModel.localIdentifier];
                         SKPhotoModel * tempModel = [nav.currentSeletedItems objectAtIndex:index];
                         photoModel.selected = tempModel.isSelected;
                         photoModel.selectIndex = tempModel.selectIndex;
                         [nav.currentSeletedItems replaceObjectAtIndex:index withObject:photoModel];
-                        
                     } else {
                         photoModel.selected = NO;
                         photoModel.selectIndex = 0;
@@ -71,13 +67,11 @@ static CGFloat const cellHeight = 70.f;
                 }];
             }];
         }
-        
         [self.tableview reloadData];
     }
 }
 
 - (void)addNavBarButtons {
-    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn setTitle:@"取消" forState:UIControlStateNormal];
@@ -93,7 +87,10 @@ static CGFloat const cellHeight = 70.f;
 }
 
 - (void)cancelBtnTouched {
-    
+    SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
+    if (nav.pickerDelegate && [nav.pickerDelegate respondsToSelector:@selector(imagePickerController:willDismissViewControllerWithItems:)]) {
+        [nav.pickerDelegate imagePickerController:nav willDismissViewControllerWithItems:[nav.currentSeletedItems copy]];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -108,14 +105,12 @@ static CGFloat const cellHeight = 70.f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return _albumsList.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     SKAlbumModel * model = [_albumsList objectAtIndex:indexPath.row];
     SKPhotoPickerViewController *controller = [[SKPhotoPickerViewController alloc] init];
     controller.title = model.name;
@@ -124,12 +119,10 @@ static CGFloat const cellHeight = 70.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return cellHeight;
 }
 
 - (UITableView *)tableview {
-    
     if (!_tableview) {
         _tableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableview.delegate = self;
@@ -138,7 +131,14 @@ static CGFloat const cellHeight = 70.f;
         [_tableview mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view).insets(UIEdgeInsetsZero);
         }];
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        if (@available(iOS 11.0, *)) {
+            _tableview.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
+        CGFloat navAndStatusHeight = (44 + [[UIApplication sharedApplication] statusBarFrame].size.height);
+        _tableview.contentInset = UIEdgeInsetsMake(navAndStatusHeight, 0, 0, 0);
+        _tableview.scrollIndicatorInsets = _tableview.contentInset;
         _tableview.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [_tableview registerClass:[SKAlbumListPhotoCell class] forCellReuseIdentifier:NSStringFromClass([SKAlbumListPhotoCell class])];
     }

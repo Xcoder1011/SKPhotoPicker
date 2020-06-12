@@ -33,8 +33,14 @@
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-
 @property (nonatomic, assign) BOOL isHideNavBar;
+@property (nonatomic, assign) CGPoint   startLocation;
+@property (nonatomic, assign) CGRect    startFrame;
+// 照片选择的的nav
+@property (nonatomic, weak) SKPhotoNavigationController *photoNavigationController;
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, assign) BOOL firstImageLoaded;
+@property (nonatomic, assign) BOOL firstImageAnimationEnd;
 
 @end
 
@@ -285,6 +291,17 @@
     }
 }
 
+- (void)presentFromController:(UIViewController *)vc {
+    if (vc && [vc isKindOfClass:[SKPhotoNavigationController class]]) {
+        self.photoNavigationController = (SKPhotoNavigationController *)vc;
+    }
+    [vc presentViewController:self animated:NO completion:nil];
+}
+
+- (void)present {
+   UIWindow *window = [UIApplication sharedApplication].delegate.window;
+   [window.rootViewController presentViewController:self animated:NO completion:nil];
+}
 
 #pragma mark - UIScrollViewDelegate
 

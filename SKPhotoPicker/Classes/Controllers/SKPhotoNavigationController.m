@@ -35,7 +35,7 @@
 }
 
 - (instancetype)initWithDelegate:(id<SKPhotoNavigationControllerDelegate>)delegate pushPickerVC:(BOOL)pushPickerVC {
-    
+   
     return [self initWithDelegate:delegate pushPickerVC:pushPickerVC allowSelectImage:YES allowSelectVideo:YES maxSelectPhotosCount:9];
 }
 
@@ -45,11 +45,10 @@
                 allowSelectVideo:(BOOL)allowSelectVideo
             maxSelectPhotosCount:(NSInteger)maxSelectPhotosCount {
     
-    SKPhotoAlbumListController *rootController = [[SKPhotoAlbumListController alloc] init];
-    _albumListController = rootController;
+   SKPhotoAlbumListController *rootController = [[SKPhotoAlbumListController alloc] init];
     self = [super initWithRootViewController:rootController];
-    
     if (self) {
+        _albumListController = rootController;
         [self setNavigationBarHidden:NO];
         self.modalPresentationStyle = UIModalPresentationFullScreen;
         self.pickerDelegate = delegate;
@@ -91,10 +90,9 @@
 
 - (void)pushToPickerVC {
     
-    __weak typeof(self) weakself = self;
     [SKPhotoManager sharedInstance].allowSelectVideo = self.allowSelectVideo;
     [SKPhotoManager sharedInstance].allowSelectImage = self.allowSelectImage;
-    
+    __weak typeof(self) weakself = self;
     [[SKPhotoManager sharedInstance] fetchAlbumsListComplete:^(NSArray<SKAlbumModel *> *albumsList) {
         weakself.albumsList = albumsList;
         SKPhotoPickerViewController *controller = [[SKPhotoPickerViewController alloc] init];
@@ -118,40 +116,38 @@
     pan.delegate = self;
     [self.view addGestureRecognizer:pan];
     self.interactivePopGestureRecognizer.enabled = NO;
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    self.navigationBar.barTintColor = [UIColor clearColor];
     self.navigationBar.translucent = YES;
-    self.navigationBar.barTintColor = kBarTintColor;
+    [self.navigationBar setBackgroundImage:[self getImageWithColor: kBarTintColor] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setShadowImage:[UIImage new]];
     self.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
                                                  NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:17]}];
 }
-
 
 - (void)didSelectDoneEvent {
     
     if (self.pickerDelegate && [self.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickPhotosItems:)]) {
         [self.pickerDelegate imagePickerController:self didFinishPickPhotosItems:[self.currentSeletedItems copy]];
     }
-    [self dismissViewControllerAnimated:YES completion:^{
-    }];
+    if (self.pickerDelegate && [self.pickerDelegate respondsToSelector:@selector(imagePickerController:willDismissViewControllerWithItems:)]) {
+        [self.pickerDelegate imagePickerController:self willDismissViewControllerWithItems:[self.currentSeletedItems copy]];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 - (void)showMaxPhotosCountAlert {
     
     NSString *message = [NSString stringWithFormat:@"你最多只能选择%ld张照片",(long)self.maxSelectPhotosCount];
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //
-    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     
     if (self.childViewControllers.count >= 1) {
-        viewController.hidesBottomBarWhenPushed = YES; // 隐藏底部的工具条
+        viewController.hidesBottomBarWhenPushed = YES;
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 12, 24, 40)];
         [backButton setImage:[UIImage imageNamedFromSKBundle:@"arrow_left_white"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(didTapBackButton) forControlEvents:UIControlEventTouchUpInside];
@@ -165,6 +161,17 @@
     [self popViewControllerAnimated:YES];
 }
 
+- (UIImage *)getImageWithColor:(UIColor *)color{
+    CGSize colorSize= CGSizeMake(1, 1);
+    UIGraphicsBeginImageContext(colorSize);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    UIImage *img=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
+
 /**
  *  拦截手势触发
  */
@@ -174,7 +181,6 @@
         return NO;
     }
     
-    // 导航控制器当前处于转换状态时忽略平移手势。
     if ([[self.navigationController valueForKey:@"_isTransitioning"] boolValue]) {
         return NO;
     }

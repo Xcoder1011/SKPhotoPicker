@@ -20,8 +20,20 @@
 
 @end
 
+// base cell
+@interface SKPhotoBaseCell : UICollectionViewCell
+
+@property (nonatomic, strong) UIImageView *imageView;
+
+@property (nonatomic, strong) UIView *bottomView;
+
+@property (nonatomic, strong) SKPhotoModel *tempModel;
+
+@end
+
+
 // 照片
-@interface SKPhotoCell : UICollectionViewCell
+@interface SKPhotoCell : SKPhotoBaseCell
 
 @property (nonatomic, weak)  id<SKPhotoCellDelegate> delegate;
 
@@ -38,9 +50,8 @@
 @end
 
 
-
 // 视频
-@interface SKVideoCell : UICollectionViewCell
+@interface SKVideoCell : SKPhotoBaseCell
 
 @property (nonatomic, weak)  NSIndexPath *indexPath;
 
@@ -51,3 +62,23 @@
 - (void)reloadData;
 
 @end
+
+
+// 拍照
+@interface SKCameraCell : UICollectionViewCell
+
+@property (nonatomic, strong) UIImageView *imageView;
+
+@property (nonatomic, strong) UIView *bottomView;
+
+@property (nonatomic, strong) UILabel *descLabel;
+
+@end
+
+
+@interface UIColor (SKUtil)
+
++ (UIColor *)sk_colorWithHexString:(NSString *)hexStr;
+
+@end
+

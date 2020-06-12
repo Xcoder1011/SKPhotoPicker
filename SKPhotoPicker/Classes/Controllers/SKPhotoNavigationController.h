@@ -10,17 +10,24 @@
 #import <Photos/Photos.h>
 #import "SKPhotoModel.h"
 
+typedef NS_ENUM(NSUInteger, SKChoosePhotoMode) {
+    SKChoosePhotoModeNormal = 0,   // 默认模式
+    SKChoosePhotoModeSupportCamera,  // 支持拍照
+};
+
 @protocol SKPhotoNavigationControllerDelegate;
 
 @interface SKPhotoNavigationController : UINavigationController
-// default YES
+/// default YES
 @property(nonatomic, assign , readonly) BOOL allowSelectImage;
-// default YES
+/// default YES
 @property(nonatomic, assign , readonly) BOOL allowSelectVideo;
-// default NO
+/// default NO
 @property(nonatomic, assign) BOOL supportLivePhoto;
-// default 9
+/// default 9
 @property(nonatomic, assign , readonly) NSInteger maxSelectPhotosCount;
+/// 业务场景
+@property(nonatomic, assign) SKChoosePhotoMode chooseMode;
 
 @property(nonatomic, strong , readonly) NSArray<SKAlbumModel *> *albumsList;
 
@@ -41,16 +48,19 @@
             maxSelectPhotosCount:(NSInteger)maxSelectPhotosCount;
 
 - (void)didSelectDoneEvent;
+
 - (void)showMaxPhotosCountAlert;
+
 @end
 
 
 @protocol SKPhotoNavigationControllerDelegate <NSObject>
 
 @optional
-// 照片
+/// 照片
 - (void)imagePickerController:(SKPhotoNavigationController *)picker didFinishPickPhotosItems:(NSArray <SKPhotoModel *> *)currentSeletedItems;
-// 视频 （只能选择一个视频）
+/// 视频 （只能选择一个视频）
 - (void)imagePickerController:(SKPhotoNavigationController *)picker didFinishPickVideo:(SKPhotoModel *)videoItem sourceAssets:(PHAsset *)asset;
-
+/// 即将消失
+- (void)imagePickerController:(SKPhotoNavigationController *)picker willDismissViewControllerWithItems:(NSArray <SKPhotoModel *> *)currentSeletedItems;
 @end

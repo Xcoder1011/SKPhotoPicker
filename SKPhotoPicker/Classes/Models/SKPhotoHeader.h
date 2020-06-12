@@ -32,6 +32,7 @@
 #define SINGLE_LINE_ADJUST_OFFSET   ((1 / [UIScreen mainScreen].scale) / 2)
 
 #define kPreviewPadding  20
+#define kPhotoBrowserAnimateTime 0.3
 #define kSafeBottomViewPadding  (sk_isIPhoneXSeries() ? 34.f : 0.f) //iphoneX 安全区域
 
 typedef NS_ENUM(NSInteger, SKPhotoAuthorizationStatus) {
