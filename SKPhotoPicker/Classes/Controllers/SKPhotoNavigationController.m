@@ -149,7 +149,7 @@
     if (self.childViewControllers.count >= 1) {
         viewController.hidesBottomBarWhenPushed = YES;
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 12, 24, 40)];
-        [backButton setImage:[UIImage imageNamedFromSKBundle:@"arrow_left_white"] forState:UIControlStateNormal];
+        [backButton setImage:[UIImage imageFromSKBundleWithName:@"arrow_left_white"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(didTapBackButton) forControlEvents:UIControlEventTouchUpInside];
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     }

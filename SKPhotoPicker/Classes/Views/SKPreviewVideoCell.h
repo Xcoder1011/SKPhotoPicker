@@ -11,10 +11,14 @@
 @class SKPhotoModel;
 @interface SKPreviewVideoCell : UICollectionViewCell
 
-@property (nonatomic, copy) void (^singleTapGestureBlock)(BOOL hideNav);
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) UIView *imageContainerView;
 
+@property (nonatomic, copy) void (^singleTapGestureBlock)(BOOL hideNav);
 @property (nonatomic, strong) SKPhotoModel *model;
 
 - (void)resetSubViewsFrame;
+- (void)reSetAnimateImageFrame:(CGRect)frame percent:(double)percent;
 
 @end

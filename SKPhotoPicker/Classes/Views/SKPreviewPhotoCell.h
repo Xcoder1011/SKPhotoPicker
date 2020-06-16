@@ -11,6 +11,10 @@
 @class SKPhotoModel;
 @interface SKPreviewPhotoCell : UICollectionViewCell
 
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) UIView *imageContainerView;
+
 @property (nonatomic, assign) BOOL supportLivePhoto;
 @property (nonatomic, strong) SKPhotoModel *model;
 

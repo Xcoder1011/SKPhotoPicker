@@ -10,11 +10,19 @@
 #import "SKPhotoHeader.h"
 #import "SKPreviewPhotoCell.h"
 #import "SKPreviewVideoCell.h"
+
 #if __has_include(<Masonry/Masonry.h>)
 #import <Masonry/Masonry.h>
 #else
 #import "Masonry.h"
 #endif
+
+#if __has_include(<SDWebImage/SDWebImageManager.h>)
+#import <SDWebImage/SDWebImageManager.h>
+#else
+#import "SDWebImageManager.h"
+#endif
+
 @interface SKPhotoPreviewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 {
     UIView *_naviBar;
@@ -65,9 +73,35 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    if(!_isShowedAnimated){
+        [self photoPreviewFisrtShowWithAnimated];
+        _isShowedAnimated = true;
+    }
+}
+
+- (void)showLoading {
+    [self.indicatorView startAnimating];
+    [self.view bringSubviewToFront:self.indicatorView];
+    self.indicatorView.hidden = NO;
+}
+
+- (void)hideLoading {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.hidden = YES;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
     [self initialConfig];
     [self addNavBarButtons];
     [self addTipBarLabels];
@@ -94,7 +128,7 @@
     CGFloat topSpace = [[UIApplication sharedApplication] statusBarFrame].size.height + 2;
     _backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, topSpace, 24, 40)];
     
-    [_backButton setImage:[UIImage imageNamedFromSKBundle:@"arrow_left_white"] forState:UIControlStateNormal];
+    [_backButton setImage:[UIImage imageFromSKBundleWithName:@"arrow_left_white"] forState:UIControlStateNormal];
     [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_backButton addTarget:self action:@selector(backButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -104,8 +138,8 @@
     
     if (self.fromPhotoPicker) {
         _selectButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 56/2.0 - 10, [[UIApplication sharedApplication] statusBarFrame].size.height + (44 - 56/2.0)/2.0, 56/2.0, 56/2.0)];
-        [_selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"select_white"] forState:UIControlStateNormal];
-        [_selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"picture_select_big"] forState:UIControlStateSelected];
+        [_selectButton setBackgroundImage:[UIImage imageFromSKBundleWithName:@"select_white"] forState:UIControlStateNormal];
+        [_selectButton setBackgroundImage:[UIImage imageFromSKBundleWithName:@"picture_select_big"] forState:UIControlStateSelected];
         [_selectButton addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
         [_naviBar addSubview:_selectButton];
         
@@ -180,12 +214,275 @@
 }
 
 - (void)backButtonClick {
-    if (self.navigationController.childViewControllers.count < 2) {
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        return;
+     [self dismiss];
+}
+
+- (void)popOrDismiss {
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+- (void)dismiss {
+    SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
+    UIImageView *tempImageView = [self tempImageViewFromContainerViewWithCurrentIndex:_currentIndex];
+    [self sk_photoBrowserWillDismissWithAnimated:tempImageView photoModel:model];
+}
+
+#pragma mark - 手势拖拉动画
+
+/// 手势拖拉动画
+- (void)panDidGesture:(UIPanGestureRecognizer *)pan{
+    
+    // 在第一张图片未加载好之前，不响应手势
+    if (self.collectionView.alpha < 1)  return;
+       
+    SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
+    CGPoint movedPoint       = CGPointZero;
+    CGPoint location    = CGPointZero;
+    CGPoint velocity    = CGPointZero;
+           
+    UIView *tempImageView = nil;;
+    
+    SKPreviewPhotoCell *photoCell;
+    SKPreviewVideoCell *videoCell;
+
+    if (model.mediaType == SKAssetMediaTypeVideo) { // 视频cell样式
+        SKPreviewVideoCell *cell = (SKPreviewVideoCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+        movedPoint       = [pan translationInView:self.view];
+        location    = [pan locationInView:cell.bottomView];
+        velocity    = [pan velocityInView:self.view];
+        tempImageView = cell.imageContainerView;
+        videoCell = cell;
+        
+    }else{
+        SKPreviewPhotoCell *cell = (SKPreviewPhotoCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+        movedPoint       = [pan translationInView:self.view]; //在视图上移动的位置
+        location    = [pan locationInView:cell.bottomView];//在视图上的位置
+        velocity    = [pan velocityInView:self.view];
+        tempImageView = cell.imageContainerView;
+        photoCell = cell;
     }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan:{
+            _startLocation  = location;
+            _startFrame = tempImageView.frame;
+        }
+            break;
+        case UIGestureRecognizerStateChanged:{
+            double percent = 1 - fabs(movedPoint.y) / self.view.frame.size.height;
+            percent = MAX(percent, 0.3);
+            if (CGRectIsEmpty(_startFrame)) {
+                return;
+            }
+            CGFloat width = self.startFrame.size.width * percent;
+            CGFloat height = self.startFrame.size.height * percent;
+            
+            CGFloat x = _startFrame.origin.x + ((1 - percent) * self.startFrame.size.width )/2.0 + movedPoint.x;
+            CGFloat y = _startFrame.origin.y + ((1 - percent) * self.startFrame.size.width )/2.0 + movedPoint.y;
+            
+            if (model.mediaType == SKAssetMediaTypeVideo) { // 视频cell样式
+                [videoCell reSetAnimateImageFrame: CGRectMake(x, y, width, height) percent:percent];
+            } else {
+                [photoCell reSetAnimateImageFrame: CGRectMake(x, y, width, height)];
+            }
+            self.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:percent];
+        }
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled: {
+            if (model.mediaType == SKAssetMediaTypeVideo) {
+                if(fabs(movedPoint.y) > 150 || fabs(velocity.y) > 550){
+                    _startFrame = tempImageView.frame;
+                    [self dismiss];
+                }else{
+                    [UIView animateWithDuration:kPhotoBrowserAnimateTime animations:^{
+                        [videoCell reSetAnimateImageFrame:self.startFrame percent:1.0];
+                        self.view.backgroundColor = [UIColor blackColor];
+                    } completion:^(BOOL finished) {
+                        self.view.backgroundColor = [UIColor blackColor];
+                    }];
+                }
+            }else {
+                if(fabs(movedPoint.y) > 150 || fabs(velocity.y) > 550){
+                    _startFrame = tempImageView.frame;
+                    [self dismiss];
+                }else{
+                    [UIView animateWithDuration:kPhotoBrowserAnimateTime animations:^{
+                        [photoCell reSetAnimateImageFrame:self.startFrame];
+                        self.view.backgroundColor = [UIColor blackColor];
+                    } completion:^(BOOL finished) {
+                        self.view.backgroundColor = [UIColor blackColor];
+                    }];
+                }
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark -- 交互动画
+
+- (void)photoPreviewFisrtShowWithAnimated {
+    if (_currentIndex > self.items.count) {
+        _currentIndex = 0;  // fix error config currentIndex bug.
+    }
+    SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
+    _firstImageLoaded = YES;
+    UIImageView *tempImageView = [self tempImageViewFromContainerViewWithCurrentIndex:_currentIndex];
+    UIView *cotainerView = model.containerView;
+    CGRect rect = [cotainerView convertRect:[cotainerView bounds] toView:[UIApplication sharedApplication].delegate.window];
+    [tempImageView setFrame:rect];
+    [_collectionView setHidden:true];
+    [self.view insertSubview:tempImageView atIndex:0];
+    if (model.url) {
+        UIImage *cacheImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:[model.url absoluteString]];
+        if(!cacheImage){
+            _firstImageLoaded = NO;
+            __weak typeof(self) weakself = self;
+            __weak typeof(tempImageView) weaktempImageView = tempImageView;
+            [[SDWebImageManager sharedManager] loadImageWithURL:model.url options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+            } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+                [weakself hideLoading];
+                weakself.firstImageLoaded = YES;
+                weaktempImageView.image = image;
+                if (weakself.firstImageAnimationEnd) {
+                    [weakself firstShowAnimationWith:tempImageView firstImageLoaded:YES];
+                }
+            }];
+        }
+    }
+    [self firstShowAnimationWith:tempImageView firstImageLoaded:_firstImageLoaded];
+}
+
+- (void)firstShowAnimationWith:(UIImageView *)tempImageView firstImageLoaded:(BOOL)firstImageLoaded{
+    
+    CGRect lastFrame = [self caculateLastFrameWithTempView:tempImageView firstImageLoaded:firstImageLoaded];
+    _firstImageAnimationEnd = NO;
+    CGFloat duration = kPhotoBrowserAnimateTime;
+    if (!_enableFirstShowAnimation) {
+        [tempImageView setFrame:lastFrame];
+        duration = 0;
+    }
+    __weak typeof(self) weakself = self;
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [tempImageView setFrame:lastFrame];
+        if (firstImageLoaded) {
+            [self->_collectionView setAlpha:1];
+        }
+    } completion:^(BOOL finished) {
+        weakself.firstImageAnimationEnd = YES;
+        if (firstImageLoaded) {
+            [weakself.collectionView setHidden:false];
+            [tempImageView removeFromSuperview];
+        } else {
+            [weakself showLoading];
+            if (weakself.firstImageLoaded) {
+                [weakself hideLoading];
+                [weakself firstShowAnimationWith:tempImageView firstImageLoaded:YES];
+            }
+        }
+    }];
+}
+
+- (UIImageView *)tempImageViewFromContainerViewWithCurrentIndex:(NSInteger)currentIndex{
+    UIImageView *imageView = [[UIImageView alloc] init];
+    SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
+    UIView *containerView = model.containerView;
+    imageView.contentMode = containerView ? containerView.contentMode : UIViewContentModeScaleAspectFit;
+    imageView.layer.cornerRadius = 0.001;
+    imageView.clipsToBounds = true;
+    
+    UIImage *image = nil;
+    if (model.localPhotoPath) {
+        image = [UIImage imageWithContentsOfFile:model.localPhotoPath];
+    } else if (model.url) {
+        UIImage *cacheImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:[model.url absoluteString]];
+        if(cacheImage){
+            image = cacheImage;
+        }
+    } else if (model.image) {
+        image = model.image;
+    }
+    if (!image) {
+        if([containerView isKindOfClass:[UIImageView class]]){
+            image = [(UIImageView *)model.containerView image];
+        }
+    }
+    imageView.image = image;
+    if(imageView.image == nil){
+        imageView.image = [UIImage sk_imageWithColor:UIColor.clearColor size:CGSizeMake(kScreenWidth, kScreenHeight)];
+    }
+    return imageView;
+}
+
+- (CGRect)caculateLastFrameWithTempView:(UIImageView *)tempImageView firstImageLoaded:(BOOL)firstImageLoaded {
+    
+    CGFloat width  = tempImageView.image.size.width;
+    CGFloat height = tempImageView.image.size.height;
+    if (width < 2) width = 10;
+    if (height < 2) height = 10;
+    CGRect lastFrame = CGRectZero;
+    CGFloat imageWidth = self.view.frame.size.width;
+    CGFloat imageHeight = floor((height / width) * imageWidth) ;// 向下取整
+    if (height / width > self.view.frame.size.height / self.view.frame.size.width) { // 长图
+        lastFrame = CGRectMake((self.view.frame.size.width - imageWidth)/2.0, 0 , imageWidth, imageHeight);
+    } else {
+        // 居中显示
+        if (!firstImageLoaded && (width >= height) && (self.view.frame.size.width > width)) {
+            imageWidth = width;
+            imageHeight = height;
+        }
+        lastFrame = CGRectMake((self.view.frame.size.width - imageWidth)/2.0, (self.view.frame.size.height - imageHeight)/2.0, imageWidth, imageHeight);
+    }
+    return lastFrame;
+}
+
+- (void)sk_photoBrowserWillDismissWithAnimated:(UIImageView *)tempView photoModel:(SKPhotoModel *)model{
+  
+    _naviBar.hidden = YES;
+    UIView *containerView = model.containerView;
+    if(containerView == nil){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.001 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                self->_collectionView.alpha = 0.f;
+                self.view.alpha = 0.f;
+            } completion:^(BOOL finished) {
+                self->_startFrame = CGRectZero;
+                [self popOrDismiss];
+            }];
+        });
+        return;
+    }
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    __block CGRect rect = [containerView convertRect:[containerView bounds] toView:window];
+    [self->_collectionView setHidden:true];
+    if([self imageIsOutOfScreen:rect]){
+        [UIView animateWithDuration:kPhotoBrowserAnimateTime delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+            [tempView setAlpha:0.f];
+        } completion:^(BOOL finished) {
+            [tempView removeFromSuperview];
+            self->_startFrame = CGRectZero;
+            [self popOrDismiss];
+        }];
+    } else {
+        CGRect lastFrame = [self caculateLastFrameWithTempView:tempView firstImageLoaded:YES];
+        tempView.frame = lastFrame;
+        if(!CGRectEqualToRect(self.startFrame, CGRectZero)){
+            tempView.frame = self.startFrame;
+        }
+        [window addSubview:tempView];
+        self->_startFrame = CGRectZero;
+        [UIView animateWithDuration:kPhotoBrowserAnimateTime delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+            [tempView setFrame:rect];
+            self.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+        } completion:^(BOOL finished) {
+            [tempView removeFromSuperview];
+            [self popOrDismiss];
+        }];
+    }
 }
 
 - (void)select:(UIButton *)selectButton {
@@ -195,30 +492,24 @@
     model.selected = selectButton.isSelected;
     
     if (selectButton.isSelected) {
-        
         SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
-        if (nav.currentSeletedLocalIdentifier.count == nav.maxSelectPhotosCount) {
+        if (nav.currentSeletedLocalIdentifier.count >= nav.maxSelectPhotosCount+1) {
             [nav showMaxPhotosCountAlert];
             selectButton.selected = !selectButton.isSelected;
-            model.selected = model.isSelected;
+            model.selected = !model.isSelected;
             return;
         }
-        
         if (self.selectItemBlock) {
             self.selectItemBlock(model);
         }
-        
         [self showAnimationWith:selectButton];
-        
+
     } else {
-        
         if (self.cancelSelectItemBlock) {
             self.cancelSelectItemBlock(model);
         }
     }
-    
     [self refreshTopBottomBarStatus];
-    
 }
 
 - (void)showAnimationWith:(UIView *)view {
@@ -237,16 +528,24 @@
     }];
 }
 
+- (BOOL)imageIsOutOfScreen:(CGRect)rect{
+   if(rect.origin.y > kScreenHeight ||
+       rect.origin.y <= - rect.size.height ||
+       rect.origin.x > kScreenWidth ||
+       rect.origin.x <= - rect.size.width ){
+        return true;
+    }
+    return false;
+}
+
 #pragma mark -- 完成选择
 
 - (void)doneButtonClick:(UIButton *)sender {
     
     SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
     if (model.mediaType == SKAssetMediaTypeVideo) { // 视频
-        
         NSString *filename = [model.asset valueForKey:@"filename"];
         NSLog(@"filename:%@",filename);
-        
         SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
         [nav dismissViewControllerAnimated:YES completion:^{
             
@@ -254,11 +553,18 @@
                 [nav.pickerDelegate imagePickerController:nav didFinishPickVideo:model sourceAssets:model.asset];
             }
         }];
-        
         return;
     }
     
-    SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
+    SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.photoNavigationController;
+    if (nav.currentSeletedItems.count == 0) { // 没有勾选的时候，默认选择当前的照片
+        SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
+        model.selected = YES;
+        if (self.selectItemBlock) {
+            self.selectItemBlock(model);
+        }
+    }
+    [self popOrDismiss];
     [nav didSelectDoneEvent];
 }
 
@@ -269,18 +575,9 @@
 - (void)refreshTopBottomBarStatus {
     
     SKPhotoModel *model = [self.items objectAtIndex:_currentIndex];
-    _selectButton.hidden = model.mediaType == SKAssetMediaTypeVideo ? YES : NO;
+    SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.photoNavigationController;
     _selectButton.selected = model.isSelected;
-    
-    if (model.isSelected) {
-        if (model.selectIndex > 0) {
-            [_selectButton setTitle:[NSString stringWithFormat:@"%tu",model.selectIndex] forState:UIControlStateSelected];
-        }
-    } else {
-        [_selectButton setTitle:nil forState:UIControlStateNormal];
-    }
-    
-    SKPhotoNavigationController *nav = (SKPhotoNavigationController *)self.navigationController;
+    _selectButton.hidden = model.mediaType == SKAssetMediaTypeVideo ? YES : NO;
     if (nav.currentSeletedItems.count > 0) {
         NSString *numstring = [NSString stringWithFormat:@"完成(%tu)",nav.currentSeletedItems.count];
         [_doneButton setTitle:numstring forState:UIControlStateNormal];
@@ -288,6 +585,14 @@
     } else {
         [_doneButton setTitle:@"完成" forState:UIControlStateNormal];
         _tipBar.hidden = YES;
+    }
+    
+    if (model.isSelected) {
+        if (model.selectIndex > 0) {
+            [_selectButton setTitle:[NSString stringWithFormat:@"%tu",model.selectIndex] forState:UIControlStateSelected];
+        }
+    } else {
+        [_selectButton setTitle:nil forState:UIControlStateNormal];
     }
 }
 

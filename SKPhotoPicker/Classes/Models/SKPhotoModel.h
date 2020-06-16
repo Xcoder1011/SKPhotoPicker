@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, SKAssetMediaType) {
 @property (nonatomic, assign) NSUInteger selectIndex;
 @property (nonatomic, strong) NSURL *url ;
 @property (nonatomic, copy) NSString *fileName;
+@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, copy) NSString *localIdentifier;
 @property (nonatomic, copy) NSString *localPhotoPath;
 @property (nonatomic, copy) NSString *localThumbPath;

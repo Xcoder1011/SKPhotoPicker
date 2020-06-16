@@ -100,7 +100,7 @@
                     
                     //BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                     UIImage *resultImage = [UIImage imageWithData:imageData scale:0.1];
-                    resultImage = [self SKaleImage:resultImage toSize:imageSize];
+                    resultImage = [self scaleImage:resultImage toSize:imageSize];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (resultImage) {
                             if (completion) completion(resultImage,info,[[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
@@ -675,7 +675,7 @@
     }
 }
 
-- (UIImage *)SKaleImage:(UIImage *)image toSize:(CGSize)size {
+- (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)size {
     if (image.size.width > size.width) {
         UIGraphicsBeginImageContext(size);
         [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
@@ -693,7 +693,7 @@
 
 @implementation UIImage (SKPhotoManager)
 
-+ (UIImage *)imageNamedFromSKBundle:(NSString *)name {
++ (UIImage *)imageFromSKBundleWithName:(NSString *)name {
     Class class = NSClassFromString(@"SKPhotoManager");
     NSBundle *currentBundle = [NSBundle bundleForClass:class];
     NSString *bundlePath = [currentBundle pathForResource:@"SKPhotoPicker" ofType:@"bundle"];
@@ -703,7 +703,7 @@
     return image;
 }
 
-+ (UIImage *)animatedGIFWithSKData:(NSData *)data {
++ (UIImage *)sk_animatedGIFWithData:(NSData *)data {
     if (!data) {
         return nil;
     }
@@ -756,5 +756,16 @@
     return frameDuration;
 }
 
++ (UIImage *)sk_imageWithColor:(UIColor *)color size:(CGSize)size {
+    if (!color || size.width <= 0 || size.height <= 0) return nil;
+    CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 
 @end

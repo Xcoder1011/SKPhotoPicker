@@ -51,7 +51,7 @@
     
     UIImageView * (^createImageView)(NSString *, CGSize) = ^(NSString *imageName, CGSize size){
         UIImageView *imageV = [[UIImageView alloc]init];
-        [imageV setImage:[UIImage imageNamedFromSKBundle:imageName]];
+        [imageV setImage:[UIImage imageFromSKBundleWithName:imageName]];
         CGRect frame = imageV.frame;
         frame.size = size;
         imageV.frame = frame;

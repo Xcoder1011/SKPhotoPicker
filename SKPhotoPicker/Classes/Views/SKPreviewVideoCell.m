@@ -18,11 +18,7 @@
 #endif
 @interface SKPreviewVideoCell () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIView *bottomView;
-
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIView *imageContainerView;
 
 @property (nonatomic, copy) NSString *identifier;
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
@@ -31,34 +27,28 @@
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 
 @property (nonatomic, strong) UIButton *playBtn;
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @end
-
 
 @implementation SKPreviewVideoCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
-        
-        self.backgroundColor = [UIColor blackColor];
-        
+        self.backgroundColor = [UIColor clearColor];
         [self setupSubViews];
-        
         UITapGestureRecognizer *singleTapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
         [self addGestureRecognizer:singleTapGes];
     }
     return self;
 }
 
-
 - (void)setModel:(SKPhotoModel *)model {
     
     _model = model;
-    [self.SKrollView setZoomScale:1.0 animated:NO];
-    
+    [self.scrollView setZoomScale:1.0 animated:NO];
     self.playBtn.hidden = model.mediaType == SKAssetMediaTypeVideo ? NO : YES;
-    
     self.identifier = model.asset.localIdentifier;
     self.imageView.image = nil;
     CGSize size;
@@ -75,12 +65,12 @@
     size = CGSizeMake(pixelWidth, pixelHeight);
     
     __weak typeof(self) weakself = self;
+    [self showLoading];
     PHImageRequestID imageRequestID = [[SKPhotoManager sharedInstance] requestImageForAsset:model.asset imageSize:size completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
         
         if ([weakself.identifier isEqualToString:model.asset.localIdentifier]) {
             weakself.imageView.image = photo;
             [weakself resetSubViewsFrame];
-            
         } else {
             [[PHImageManager defaultManager] cancelImageRequest:weakself.imageRequestID];
         }
@@ -104,10 +94,6 @@
     }];
 }
 
-- (void)configPlayerButton {
-    
-}
-
 - (void)playVideo:(UIButton *)sender {
     
     if (self.player) {
@@ -123,7 +109,6 @@
     
     __weak typeof(self) weakself = self;
     [[SKPhotoManager sharedInstance] requestPlayerItemForVideo:_model.asset completion:^(AVPlayerItem *playerItem, NSDictionary *info) {
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakself dealPlayerItem:playerItem info:info];
         });
@@ -145,6 +130,15 @@
     [self.player play];
 }
 
+- (void)showLoading {
+    [self.indicatorView startAnimating];
+    self.indicatorView.hidden = NO;
+}
+
+- (void)hideLoading {
+    [self.indicatorView stopAnimating];
+    self.indicatorView.hidden = YES;
+}
 
 #pragma mark - Notification Method
 
@@ -187,22 +181,32 @@
     [self clearPlayer];
 }
 
+- (void)reSetAnimateImageFrame:(CGRect)frame percent:(double)percent {
+    
+    [UIView animateWithDuration:0 animations:^{
+        self.imageContainerView.frame = frame;
+        self.imageView.frame = self.imageContainerView.bounds;
+        [self.playBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(floor(80 * percent));
+        }];
+        [UIView animateWithDuration:kPhotoBrowserAnimateTime animations:^{
+            [self layoutIfNeeded];
+        }];
+    }];
+}
 
 #pragma mark - UIScrollViewDelegate
 
-- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)SKrollView {
+- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
 }
 
-- (void)SKrollViewWillBeginZooming:(UIScrollView *)SKrollView withView:(UIView *)view {
-    SKrollView.contentInset = UIEdgeInsetsZero;
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    scrollView.contentInset = UIEdgeInsetsZero;
 }
 
-- (void)SKrollViewDidZoom:(UIScrollView *)SKrollView {
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
     [self refreshImageContainerViewCenter];
-}
-
-- (void)SKrollViewDidEndZooming:(UIScrollView *)SKrollView withView:(UIView *)view atScale:(CGFloat)SKale {
 }
 
 #pragma mark - UITapGestureRecognizer Event
@@ -227,14 +231,12 @@
 - (BOOL)isPlaying {
     
     if (@available(iOS 10.0, *)) {
-        
         if (self.player && self.player.timeControlStatus == AVPlayerTimeControlStatusPlaying) {
             return YES;
         } else {
             return NO;
         }
     }
-    
     if (self.player && self.player.rate != 0) {
         return YES;
     } else {
@@ -250,7 +252,6 @@
     self.imageContainerView.center = CGPointMake(_scrollView.contentSize.width * 0.5 + offsetX, _scrollView.contentSize.height * 0.5 + offsetY);
 }
 
-
 - (UIView *)bottomView {
     
     if (!_bottomView) {
@@ -261,7 +262,6 @@
     }
     return _bottomView;
 }
-
 
 - (UIImageView *)imageView {
     
@@ -276,7 +276,7 @@
     return _imageView;
 }
 
-- (UIScrollView *)SKrollView {
+- (UIScrollView *)scrollView {
     
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] init];
@@ -301,10 +301,10 @@
 - (UIView *)imageContainerView {
     
     if (!_imageContainerView) {
-        _imageContainerView = [[UIView alloc] initWithFrame:self.SKrollView.bounds];
+        _imageContainerView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
         _imageContainerView.clipsToBounds = YES;
         _imageContainerView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.SKrollView addSubview:_imageContainerView];
+        [self.scrollView addSubview:_imageContainerView];
     }
     return _imageContainerView;
 }
@@ -313,7 +313,7 @@
     
     if (!_playBtn) {
         _playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_playBtn setImage:[UIImage imageNamedFromSKBundle:@"play_big_icon"] forState:UIControlStateNormal];
+        [_playBtn setImage:[UIImage imageFromSKBundleWithName:@"play_big_icon"] forState:UIControlStateNormal];
         [_playBtn addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
         _playBtn.userInteractionEnabled = NO;
         [self.bottomView addSubview:_playBtn];

@@ -186,8 +186,8 @@
         [selectButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [selectButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [selectButton addTarget:self action:@selector(selectButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"select_white"] forState:UIControlStateNormal];
-        [selectButton setBackgroundImage:[UIImage imageNamedFromSKBundle:@"picture_select_small"] forState:UIControlStateSelected];
+        [selectButton setBackgroundImage:[UIImage imageFromSKBundleWithName:@"select_white"] forState:UIControlStateNormal];
+        [selectButton setBackgroundImage:[UIImage imageFromSKBundleWithName:@"picture_select_small"] forState:UIControlStateSelected];
         [self.bottomView addSubview:selectButton];
         _selectedButton = selectButton;
     }
@@ -223,7 +223,7 @@
     NSString *string = [NSString stringWithFormat:@"  %@",model.duration];
     NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:string];
     NSTextAttachment *attch = [[NSTextAttachment alloc] init];
-    attch.image = [UIImage imageNamedFromSKBundle:@"video_icon_white"];
+    attch.image = [UIImage imageFromSKBundleWithName:@"video_icon_white"];
     attch.bounds = CGRectMake(0, -0, 37/2.0, 22/2.0);
     NSAttributedString *attachString = [NSAttributedString attributedStringWithAttachment:attch];
     [attri insertAttributedString:attachString atIndex: 0];

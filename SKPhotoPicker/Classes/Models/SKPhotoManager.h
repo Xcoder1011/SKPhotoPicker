@@ -83,6 +83,7 @@
 
 @interface UIImage (SKPhotoManager)
 
-+ (UIImage *)imageNamedFromSKBundle:(NSString *)name;
-+ (UIImage *)animatedGIFWithSKData:(NSData *)data;
++ (UIImage *)imageFromSKBundleWithName:(NSString *)name;
++ (UIImage *)sk_animatedGIFWithData:(NSData *)data;
++ (UIImage *)sk_imageWithColor:(UIColor *)color size:(CGSize)size;
 @end

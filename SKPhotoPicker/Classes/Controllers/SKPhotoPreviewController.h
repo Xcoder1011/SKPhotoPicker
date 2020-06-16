@@ -11,7 +11,7 @@
 @class SKPhotoModel;
 @interface SKPhotoPreviewController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray <SKPhotoModel *> *items;
 @property (nonatomic, assign) NSInteger currentIndex;
 
 @property (nonatomic, copy) void (^selectItemBlock) (SKPhotoModel *item);

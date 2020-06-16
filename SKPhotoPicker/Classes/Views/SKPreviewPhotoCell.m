@@ -43,9 +43,6 @@
 >
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) UIView *imageContainerView;
 @property (nonatomic, copy)   NSString *identifier;
 @property (nonatomic, assign) PHImageRequestID imageRequestID;
 @property (nonatomic, assign) PHImageRequestID livePhotoRequestID;
@@ -134,11 +131,47 @@
 }
 
 - (void)startPlayAnimationView {
+    __weak typeof(self) weakself = self;
+    if (self.model && self.model.mediaType == SKAssetMediaTypeGIF) {  // GIF
+        if (self.model.asset) {
+            [self showLoading];
+            PHImageRequestID imageRequestID = [[SKPhotoManager sharedInstance] requestGIFForAsset:self.model.asset completion:^(NSData *imageData, UIImageOrientation orientation) {
+                if ([weakself.identifier isEqualToString:weakself.model.asset.localIdentifier]) {
+                    dispatch_async_on_global_queue(^{
+                        UIImage *image;
+                        if ([UIImage respondsToSelector:@selector(sd_animatedGIFWithData:)]) {
+                            image = [UIImage sd_animatedGIFWithData:imageData];
+                        } else {
+                            image = [UIImage sk_animatedGIFWithData:imageData];
+                        }
+                        if (image) {
+                            dispatch_async_on_main_queue(^{
+                                weakself.imageView.image = image;
+                                [weakself resetSubViewsFrame];
+                            });
+                        }
+                    });
+                } else {
+                    [[PHImageManager defaultManager] cancelImageRequest:weakself.imageRequestID];
+                }
+                self.imageRequestID = 0;
+                
+            } progressHandler:nil failed:^{
+            } needNetworkAccess:YES];
+            
+            if (imageRequestID && self.imageRequestID && imageRequestID != self.imageRequestID) {
+                [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
+            }
+            self.imageRequestID = imageRequestID;
+        } else if (self.model.url) {
+            [self configWithUrl:self.model.url];
+        }
+        return;
+    }
     
 #ifdef __IPHONE_9_0
     
-    if (self.model && self.model.asset && self.supportLivePhoto) {
-        
+    if (self.model && self.supportLivePhoto) {
         SKPhotoModel *model = self.model;
         PHAsset *phAsset = model.asset;
         CGFloat aspectRatio = phAsset.pixelWidth / (CGFloat)phAsset.pixelHeight;
@@ -146,11 +179,8 @@
         CGFloat pixelWidth = kScreenWidth * 1.7;
         CGFloat pixelHeight = pixelWidth / aspectRatio;
         size = CGSizeMake(pixelWidth, pixelHeight);
-        
         self.livePhotoView.hidden = model.mediaType == SKAssetMediaTypeLivePhoto ? NO : YES;
-        
         if (self.model.mediaType == SKAssetMediaTypeLivePhoto) { // LivePhoto
-            
             if (_livePhotoView.livePhoto) {
                 [self.livePhotoView stopPlayback];
                 self.livePhotoView.livePhoto = nil;
@@ -164,61 +194,20 @@
                     [[PHImageManager defaultManager] cancelImageRequest:weakself.livePhotoRequestID];
                 }
                 weakself.livePhotoRequestID = 0;
-                
+                [weakself hideLoading];
             } progressHandler:^(double progress) {
-                
             } failed:^{
-                
+                [weakself hideLoading];
             } needNetworkAccess:NO];
-            
             if (livePhotoRequestID && self.livePhotoRequestID && livePhotoRequestID != self.livePhotoRequestID) {
                 [[PHImageManager defaultManager] cancelImageRequest:self.livePhotoRequestID];
             }
             self.livePhotoRequestID = livePhotoRequestID;
         }
-        
         return;
     }
     
 #endif
-    
-    __weak typeof(self) weakself = self;
-    
-    if (self.model && self.model.asset && self.model.mediaType == SKAssetMediaTypeGIF) {  // GIF
-        
-        PHImageRequestID imageRequestID = [[SKPhotoManager sharedInstance] requestGIFForAsset:self.model.asset completion:^(NSData *imageData, UIImageOrientation orientation) {
-            if ([weakself.identifier isEqualToString:weakself.model.asset.localIdentifier]) {
-                dispatch_async_on_global_queue(^{
-                    
-                    UIImage *image;
-                    if ([UIImage respondsToSelector:@selector(sd_animatedGIFWithData:)]) {
-                        image = [UIImage sd_animatedGIFWithData:imageData];
-                    } else {
-                        image = [UIImage animatedGIFWithSKData:imageData];
-                    }
-                    if (image) {
-                        dispatch_async_on_main_queue(^{
-                            weakself.imageView.image = image;
-                            [weakself resetSubViewsFrame];
-                        });
-                    }
-                });
-                
-            } else {
-                NSLog(@"gif imageRequestID cell is showing other asset");
-                [[PHImageManager defaultManager] cancelImageRequest:weakself.imageRequestID];
-            }
-            self.imageRequestID = 0;
-            
-        } progressHandler:nil failed:^{
-        } needNetworkAccess:YES];
-        
-        if (imageRequestID && self.imageRequestID && imageRequestID != self.imageRequestID) {
-            NSLog(@"gif cancelImageRequest  imageRequestID ####################");
-            [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
-        }
-        self.imageRequestID = imageRequestID;
-    }
 }
 
 - (void)configWithUrl:(NSURL *)url {
@@ -272,36 +261,26 @@
     
     [self.scrollView setZoomScale:1.0 animated:NO];
     self.imageContainerView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
-    
     UIImage *image = self.imageView.image;
-    
     if (image) {
-        NSLog(@"image.size = %@",NSStringFromCGSize(image.size));
         if (image.size.height / image.size.width > self.frame.size.height / self.scrollView.frame.size.width) { // 长图
             CGFloat imageContainerViewHeight = floor((image.size.height / image.size.width) * self.scrollView.frame.size.width) ;// 向下取整
             self.imageContainerView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, imageContainerViewHeight);
-            
         } else {
             // 居中显示
             CGFloat imageContainerViewHeight = floor((image.size.height / image.size.width) * self.scrollView.frame.size.width);
-            //self.imageContainerView.size = CGSizeMake(self.scrollView.frame.size.width, imageContainerViewHeight);
             self.imageContainerView.bounds = CGRectMake(0, 0, self.scrollView.frame.size.width, imageContainerViewHeight);
             self.imageContainerView.center = CGPointMake(self.scrollView.frame.size.width / 2.0, self.frame.size.height / 2.0);
         }
     }
-    
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, MAX(self.imageContainerView.frame.size.height, self.frame.size.height));
     [self.scrollView scrollRectToVisible:self.bounds animated:NO];
     self.scrollView.alwaysBounceVertical = self.imageContainerView.frame.size.height <= self.bounds.size.height ? NO : YES;
-    
     self.imageView.frame = self.imageContainerView.bounds;
-    
 #ifdef __IPHONE_9_0
     self.livePhotoView.frame = self.imageContainerView.bounds;
 #endif
-    // self.scrollView.contentInset = UIEdgeInsetsZero;
     [self refreshImageContainerViewCenter];
-    
 }
 
 - (void)stopLivePhoto {
@@ -344,6 +323,7 @@
 }
 
 #pragma mark -  PHLivePhotoViewDelegate
+
 - (void)livePhotoView:(PHLivePhotoView *)livePhotoView willBeginPlaybackWithStyle:(PHLivePhotoViewPlaybackStyle)playbackStyle {
 }
 - (void)livePhotoView:(PHLivePhotoView *)livePhotoView didEndPlaybackWithStyle:(PHLivePhotoViewPlaybackStyle)playbackStyle {
@@ -367,7 +347,6 @@
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)tap {
-    
     if (self.singleTapGestureBlock) {
         self.singleTapGestureBlock();
     }
@@ -391,7 +370,6 @@
 
 
 - (UIView *)bottomView {
-    
     if (!_bottomView) {
         UIView *bottomView = [[UIView alloc] initWithFrame:self.contentView.bounds];
         bottomView.backgroundColor = [UIColor blackColor];
@@ -403,7 +381,6 @@
 
 
 - (UIImageView *)imageView {
-    
     if (!_imageView ) {
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:self.imageContainerView.bounds];
         imageV.contentMode = UIViewContentModeScaleAspectFill;
@@ -416,7 +393,6 @@
 }
 
 - (UIScrollView *)scrollView {
-    
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.frame = CGRectMake(kPreviewPadding / 2.0, 0, self.frame.size.width - kPreviewPadding,  self.frame.size.height);
@@ -438,7 +414,6 @@
 }
 
 - (UIView *)imageContainerView {
-    
     if (!_imageContainerView) {
         _imageContainerView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
         _imageContainerView.clipsToBounds = YES;
@@ -449,7 +424,6 @@
 }
 
 - (PHLivePhotoView *)livePhotoView {
-    
     if (!_livePhotoView) {
         _livePhotoView = [[PHLivePhotoView alloc] init];
         _livePhotoView.clipsToBounds = YES;
@@ -506,12 +480,10 @@ static CGFloat const cellHeight = 70.f;
         
         if ([weakself.identifier isEqualToString:[model.items lastObject].asset.localIdentifier]) {
             weakself.photoView.image = photo;
-            
         } else {
             [[PHImageManager defaultManager] cancelImageRequest:weakself.imageRequestID];
         }
-        
-        if (!isDegraded) { // 不是低质量图像,it's ok 了
+        if (!isDegraded) { //不是低质量图像
             self.imageRequestID = 0;
         }
         
